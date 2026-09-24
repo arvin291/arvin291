@@ -638,3 +638,6 @@ a.chip { text-decoration: none; }
 /* keep the last lines of every page clear of the always-visible floating buttons */
 .site-footer { padding-bottom: calc(5.5rem + env(safe-area-inset-bottom, 0px)); }
 html { scroll-padding-bottom: 5.5rem; }
+
+.footer__credit a { color: var(--gold-bright); text-decoration: underline; text-underline-offset: .15em; }
+.footer__credit a:hover { color: #fff; }
