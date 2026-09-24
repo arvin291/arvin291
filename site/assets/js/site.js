@@ -331,8 +331,8 @@
   $$("[data-year]").forEach(function (y) { y.textContent = String(new Date().getFullYear()); });
   $$('a[target="_blank"]').forEach(function (a) { if (!/noopener/.test(a.rel)) a.rel = (a.rel ? a.rel + " " : "") + "noopener"; });
 
-  // the floating WhatsApp button steps aside while a call-to-action, the form buttons or the footer are on screen
-  var fab = $(".wa-fab");
+  // the floating WhatsApp + social row steps aside while a call-to-action, the form buttons or the footer are on screen
+  var fab = $("[data-float]");
   if (fab && "IntersectionObserver" in window) {
     var seen = [];
     var io = new IntersectionObserver(function (entries) {
