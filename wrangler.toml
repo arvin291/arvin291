@@ -1,0 +1,7 @@
+# Cloudflare Pages configuration.
+# Publish directory is `site/` — nothing outside it is ever uploaded.
+# Deploy with:  npx wrangler pages deploy
+# (or connect the GitHub repo to Pages: build command empty, output directory "site")
+name = "shalvi-technologies"
+compatibility_date = "2026-09-01"
+pages_build_output_dir = "site"

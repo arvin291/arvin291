@@ -1,0 +1,14 @@
+# Old URLs from the previous build -> new clean URLs (Cloudflare also serves /about for about.html automatically)
+/index.html            /            301
+/about/                /about       301
+/products/             /products    301
+/solutions/            /solutions   301
+/web/                  /web         301
+/alliances/            /alliances   301
+/contact/              /contact     301
+/privacy/              /privacy     301
+/shalvitechnologies.html  /         301
+/SHARE/*               /            301
+/company               /about       301
+/enquire               /contact     301
+/portfolio             /products    301

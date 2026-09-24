@@ -1,0 +1,23 @@
+# Cloudflare / Wrangler local state (never commit; it holds account ids)
+.wrangler/
+.dev.vars
+.env
+.env.*
+
+# Editors / OS
+.DS_Store
+Thumbs.db
+*.log
+.vscode/
+.idea/
+
+# Node (only if you add a build step later)
+node_modules/
+
+# Python tooling
+__pycache__/
+*.pyc
+
+# Scratch / exports
+SHARE/
+*.zip
