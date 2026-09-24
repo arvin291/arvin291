@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 800" fill="none" aria-hidden="true">
+  <g stroke="#c4a35a" stroke-opacity=".28">
+    <circle cx="400" cy="400" r="310"/>
+    <circle cx="400" cy="400" r="248"/>
+    <circle cx="400" cy="400" r="186"/>
+    <path d="M400 40v720M40 400h720M153 153l494 494M647 153L153 647"/>
+  </g>
+  <path fill="#c4a35a" fill-opacity=".9" d="M400 92l18 118-18 18-18-18z"/>
+  <path fill="#c4a35a" fill-opacity=".55" d="M400 708l18-118-18-18-18 18zM92 400l118-18 18 18-18 18zM708 400l-118-18-18 18 18 18z"/>
+  <circle cx="400" cy="400" r="54" fill="#c4a35a" fill-opacity=".18" stroke="#c4a35a" stroke-opacity=".7"/>
+  <text x="400" y="412" text-anchor="middle" fill="#e8d5a0" font-family="Georgia, serif" font-size="28" font-weight="700">ST</text>
+  <text x="400" y="68" text-anchor="middle" fill="#c4a35a" font-family="Georgia, serif" font-size="22">N</text>
+  <text x="400" y="756" text-anchor="middle" fill="#c4a35a" font-family="Georgia, serif" font-size="18">S</text>
+  <text x="44" y="408" text-anchor="middle" fill="#c4a35a" font-family="Georgia, serif" font-size="18">W</text>
+  <text x="756" y="408" text-anchor="middle" fill="#c4a35a" font-family="Georgia, serif" font-size="18">E</text>
+</svg>

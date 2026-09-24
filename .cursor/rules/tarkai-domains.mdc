@@ -1,0 +1,18 @@
+---
+description: Tarkai domain ownership — do not confuse with tarkai.com
+alwaysApply: true
+---
+
+# Tarkai domains (user-owned vs other company)
+
+The user registered and owns:
+
+- tarkai.ai
+- tarkai.co.in
+- tarkai.in
+
+`tarkai.com` is a **different company** (Tark AI Private Limited, Chandigarh). Never treat it as the user's brand, host, or Cloudflare account.
+
+When the user says Tarkai / Tarkai.ai they mean **their** domains and **their** Cloudflare account — not tarkai.com.
+
+They plan to host the Shalvi Technologies site (`www.shalvitechnologies.in`) on Cloudflare, using that Tarkai-related Cloudflare account they control.
