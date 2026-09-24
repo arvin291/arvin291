@@ -1,6 +1,6 @@
 # Shalvi Technologies website
 
-Polished static site for www.shalvitechnologies.in.
+Polished static site for www.shalvitechnologies.com.
 
 ## Share this site
 
