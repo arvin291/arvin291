@@ -343,6 +343,6 @@
       });
       fab.classList.toggle("is-hidden", seen.length > 0);
     });
-    $$(".cta, .site-footer .container, .form__actions, .hero .btn-row, .office .btn-row, .basket, .form-status").forEach(function (t) { io.observe(t); });
+    $$(".cta, .site-footer .container, .form__actions, .office .btn-row, .basket, .form-status").forEach(function (t) { io.observe(t); });
   }
 })();

@@ -132,11 +132,11 @@
       '<span class="desk-fab__label">Ask Shalvi</span>' +
     "</button>" +
     '<section class="desk-panel" id="desk-panel" role="dialog" aria-labelledby="desk-title" hidden>' +
-      '<header class="desk-head">' +
+      '<div class="desk-head">' +
         '<img src="/assets/img/emblem-96.webp" alt="" width="40" height="40">' +
         '<div><h2 id="desk-title">Ask Shalvi</h2><p>Automated helper · answers from our company profile</p></div>' +
         '<button class="desk-x" type="button" aria-label="Close Ask Shalvi"><svg class="ico" aria-hidden="true"><use href="#i-close"/></svg></button>' +
-      "</header>" +
+      "</div>" +
       '<div class="desk-log" role="log" aria-live="polite"></div>' +
       '<div class="desk-chips" role="group" aria-label="Suggested questions"></div>' +
       '<form class="desk-form">' +
