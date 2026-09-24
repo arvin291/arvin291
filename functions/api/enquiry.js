@@ -1,36 +1,57 @@
 /**
- * POST /api/enquiry  — receives the contact form and emails it to the company.
+ * POST /api/enquiry  — receives the enquiry form and emails it to the office.
  * GET  /api/enquiry  — { ok, configured } so the page can adapt when email is not set up yet.
  *
  * Runs as a Cloudflare Pages Function. No database, no cookies.
- * Email is sent through Resend (https://resend.com — free tier is enough for enquiries).
+ * Email is sent through Resend (https://resend.com).
  *
- * Set these in Cloudflare Pages → Settings → Environment variables (Production):
- *   RESEND_API_KEY   re_xxxxxxxx            (Resend → API Keys)
- *   ENQUIRY_TO       info@shalvitechnologies.com,shalvitechnologieslko@gmail.com   (comma separated)
- *   ENQUIRY_FROM     "Shalvi Website <enquiry@shalvitechnologies.com>"  (domain must be verified in Resend)
- * Optional spam protection (Cloudflare Turnstile — free):
- *   TURNSTILE_SECRET 0x4AAAA...   and add the widget site-key to site/contact.html (see docs/DEPLOY.md)
+ * Configuration (see docs/DEPLOY.md):
+ *   ENQUIRY_TO, ENQUIRY_FROM   plain values in wrangler.toml [vars]
+ *   RESEND_API_KEY             secret:  npx wrangler pages secret put RESEND_API_KEY
+ *   TURNSTILE_SECRET           optional secret, only after the Turnstile widget is on the page
  *
- * Until these are set the endpoint answers 503 { error: "not_configured" } and the page
- * offers the visitor "open in email app / WhatsApp / call" instead — no enquiry is lost.
+ * Until RESEND_API_KEY is set the endpoint answers 503 { error: "not_configured" } and the page
+ * offers "open in email app / WhatsApp / call" instead, so no enquiry is lost.
+ * Requests without JavaScript (plain form POST) are answered with a redirect back to the page.
  */
 
+const MAX_BYTES = 20000;
 const MAX = { name: 120, org: 160, email: 200, phone: 40, interest: 120, message: 4000, items: 2000 };
 
-function json(body, status = 200, extra = {}) {
+function json(body, status = 200) {
   return new Response(JSON.stringify(body), {
     status,
-    headers: { "Content-Type": "application/json; charset=utf-8", "Cache-Control": "no-store", ...extra },
+    headers: { "Content-Type": "application/json; charset=utf-8", "Cache-Control": "no-store" },
   });
 }
 
-function clean(v, max) {
-  return String(v == null ? "" : v).replace(/[\u0000-\u0008\u000B\u000C\u000E-\u001F]/g, "").trim().slice(0, max);
+// one line: no control characters at all, whitespace collapsed (safe for the Subject header)
+function line(v, max) {
+  if (typeof v !== "string") return "";
+  return v.replace(/[\u0000-\u001F\u007F]/g, " ").replace(/\s+/g, " ").trim().slice(0, max);
+}
+// multi-line block: keeps line breaks and tabs, drops other control characters
+function block(v, max) {
+  if (typeof v !== "string") return "";
+  return v.replace(/\r\n?/g, "\n").replace(/[\u0000-\u0008\u000B\u000C\u000E-\u001F\u007F]/g, "").trim().slice(0, max);
 }
 
 function isConfigured(env) {
   return Boolean(env.RESEND_API_KEY && env.ENQUIRY_TO && env.ENQUIRY_FROM);
+}
+
+function wantsJson(request) {
+  return (request.headers.get("accept") || "").includes("application/json");
+}
+
+// answer a plain (no-JavaScript) form post with a redirect back to the contact section
+function reply(request, body, status) {
+  if (wantsJson(request)) return json(body, status);
+  const url = new URL("/", request.url);
+  if (body.ok) url.searchParams.set("sent", body.ref || "ST");
+  else url.searchParams.set("error", body.error || "failed");
+  url.hash = "contact";
+  return Response.redirect(url.toString(), 303);
 }
 
 async function readBody(request) {
@@ -56,20 +77,24 @@ export async function onRequestGet({ env }) {
 }
 
 export async function onRequestPost({ request, env }) {
-  let raw;
-  try { raw = await readBody(request); } catch (e) { return json({ ok: false, error: "bad_request" }, 400); }
+  const len = Number(request.headers.get("content-length") || 0);
+  if (len > MAX_BYTES) return reply(request, { ok: false, error: "too_large" }, 413);
 
-  // Honeypot: real visitors never see/fill this field. Pretend success so bots stop retrying.
-  if (clean(raw.website, 50)) return json({ ok: true, ref: "ST-OK" });
+  let raw;
+  try { raw = await readBody(request); } catch (e) { raw = null; }
+  if (!raw || typeof raw !== "object" || Array.isArray(raw)) return reply(request, { ok: false, error: "bad_request" }, 400);
+
+  // Honeypot: real visitors never fill this field. Answer as if accepted so bots stop retrying.
+  if (line(raw.website, 50)) return reply(request, { ok: true, ref: "ST-OK" }, 200);
 
   const d = {
-    name: clean(raw.name, MAX.name),
-    org: clean(raw.org, MAX.org),
-    email: clean(raw.email, MAX.email),
-    phone: clean(raw.phone, MAX.phone),
-    interest: clean(raw.interest, MAX.interest),
-    message: clean(raw.message, MAX.message),
-    items: clean(raw.items, MAX.items),
+    name: line(raw.name, MAX.name),
+    org: line(raw.org, MAX.org),
+    email: line(raw.email, MAX.email),
+    phone: line(raw.phone, MAX.phone),
+    interest: line(raw.interest, MAX.interest),
+    message: block(raw.message, MAX.message),
+    items: block(raw.items, MAX.items),
   };
 
   const errors = {};
@@ -77,14 +102,15 @@ export async function onRequestPost({ request, env }) {
   if (!/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(d.email)) errors.email = "Enter a valid email address.";
   if (d.phone && !/^[+\d][\d\s\-()]{6,}$/.test(d.phone)) errors.phone = "Enter a valid phone number.";
   if (!d.message) errors.message = "Please describe your requirement.";
-  if (Object.keys(errors).length) return json({ ok: false, error: "validation", errors }, 400);
+  if (Object.keys(errors).length) return reply(request, { ok: false, error: "validation", errors }, 400);
 
   if (env.TURNSTILE_SECRET) {
-    const ok = await verifyTurnstile(env.TURNSTILE_SECRET, raw["cf-turnstile-response"], request.headers.get("CF-Connecting-IP"));
-    if (!ok) return json({ ok: false, error: "turnstile" }, 403);
+    let passed = false;
+    try { passed = await verifyTurnstile(env.TURNSTILE_SECRET, raw["cf-turnstile-response"], request.headers.get("CF-Connecting-IP")); } catch (e) { passed = false; }
+    if (!passed) return reply(request, { ok: false, error: "turnstile" }, 403);
   }
 
-  if (!isConfigured(env)) return json({ ok: false, error: "not_configured" }, 503);
+  if (!isConfigured(env)) return reply(request, { ok: false, error: "not_configured" }, 503);
 
   const ref = "ST-" + Date.now().toString(36).toUpperCase();
   const when = new Date().toLocaleString("en-IN", { timeZone: "Asia/Kolkata" });
@@ -96,35 +122,33 @@ export async function onRequestPost({ request, env }) {
     `Email:        ${d.email}`,
     `Phone:        ${d.phone || "-"}`,
     `Interest:     ${d.interest || "-"}`,
-    d.items ? `\nRequirement list:\n${d.items}` : "",
+    d.items ? `\nEnquiry list:\n${d.items}` : "",
     "",
-    "Message:",
+    "Requirement:",
     d.message,
     "",
-    `— Sent from the website contact form (${request.headers.get("CF-Connecting-IP") || "ip n/a"}, ${request.headers.get("CF-IPCountry") || ""})`,
+    `— Sent from the website enquiry form (${request.headers.get("CF-IPCountry") || "country n/a"})`,
   ].join("\n");
 
-  const r = await fetch("https://api.resend.com/emails", {
-    method: "POST",
-    headers: { Authorization: `Bearer ${env.RESEND_API_KEY}`, "Content-Type": "application/json" },
-    body: JSON.stringify({
-      from: env.ENQUIRY_FROM,
-      to: env.ENQUIRY_TO.split(",").map((s) => s.trim()).filter(Boolean),
-      reply_to: d.email,
-      subject: `[${ref}] Enquiry: ${d.interest || "General"} — ${d.name}${d.org ? " (" + d.org + ")" : ""}`,
-      text,
-    }),
-  });
-
-  if (!r.ok) {
-    console.error("resend_failed", r.status, await r.text().catch(() => ""));
-    return json({ ok: false, error: "send_failed" }, 502);
+  try {
+    const r = await fetch("https://api.resend.com/emails", {
+      method: "POST",
+      headers: { Authorization: `Bearer ${env.RESEND_API_KEY}`, "Content-Type": "application/json" },
+      body: JSON.stringify({
+        from: env.ENQUIRY_FROM,
+        to: String(env.ENQUIRY_TO).split(",").map((s) => s.trim()).filter(Boolean),
+        reply_to: d.email,
+        subject: `[${ref}] Enquiry: ${d.interest || "General"} — ${d.name}${d.org ? " (" + d.org + ")" : ""}`.slice(0, 200),
+        text,
+      }),
+    });
+    if (!r.ok) {
+      console.error("resend_failed", r.status, await r.text().catch(() => ""));
+      return reply(request, { ok: false, error: "send_failed" }, 502);
+    }
+  } catch (e) {
+    console.error("resend_unreachable", String(e));
+    return reply(request, { ok: false, error: "send_failed" }, 502);
   }
-  return json({ ok: true, ref });
-}
-
-export async function onRequest({ request }) {
-  // Any other method
-  if (request.method === "GET" || request.method === "POST") return undefined; // handled above
-  return json({ ok: false, error: "method_not_allowed" }, 405, { Allow: "GET, POST" });
+  return reply(request, { ok: true, ref }, 200);
 }

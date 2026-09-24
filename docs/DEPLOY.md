@@ -25,36 +25,40 @@ npx wrangler login
 npx wrangler pages deploy        # reads wrangler.toml → uploads the site/ folder
 ```
 
-## 2. Make the contact form deliver email
+## 2. Make the enquiry form deliver email
 
-Without this step the form still works: it opens the visitor's email app or WhatsApp with the
-message pre-filled. With it, enquiries arrive in your inbox with a reference number.
+Without this step the form still works: it offers to open the visitor's email app or WhatsApp
+with the message filled in. With it, enquiries arrive in your inbox with a reference number.
 
 1. Create a free account at **resend.com**, add the domain `shalvitechnologies.com`
-   (Resend shows two DNS records to add in Cloudflare → DNS), then create an **API key**.
-2. Cloudflare → Workers & Pages → *shalvi-technologies* → **Settings** → **Environment variables**
-   → **Production** → add:
+   (Resend shows DNS records to add in Cloudflare → DNS) and create an **API key**.
+2. The recipients and sender are already set in `wrangler.toml` under `[vars]`:
+   `ENQUIRY_TO` (both mailboxes) and `ENQUIRY_FROM` (`enquiry@shalvitechnologies.com`, which works
+   once the domain is verified in Resend). Change them there if needed.
+3. Store the API key as a secret (it is never written into any file):
 
-   | Variable        | Value                                                              |
-   |-----------------|--------------------------------------------------------------------|
-   | `RESEND_API_KEY`| the key from Resend (starts with `re_`)                             |
-   | `ENQUIRY_TO`    | `info@shalvitechnologies.com,shalvitechnologieslko@gmail.com`       |
-   | `ENQUIRY_FROM`  | `Shalvi Website <enquiry@shalvitechnologies.com>`                   |
+   ```
+   npx wrangler pages secret put RESEND_API_KEY
+   ```
 
-   Mark `RESEND_API_KEY` as *Encrypt*. Add the same three under **Preview** if you use preview deployments.
-3. Redeploy (Deployments → Retry, or push any commit).
-4. Test: open `https://www.shalvitechnologies.com/api/enquiry` — it must show
-   `{"ok":true,"configured":true}`. Then send a test enquiry from the contact page.
+   Paste the key when asked.
+4. Deploy again: `npx wrangler pages deploy --branch main --commit-dirty=true`.
+5. Test: open `https://www.shalvitechnologies.com/api/enquiry`. It must show
+   `{"ok":true,"configured":true}`. Then send a test enquiry from the Contact section.
 
 ### Optional: spam protection with Cloudflare Turnstile (free)
 
+Order matters: put the widget on the page first, the secret last. A secret without the widget
+blocks every enquiry.
+
 1. Cloudflare → **Turnstile** → Add site → domain `shalvitechnologies.com` → copy the **Site key** and **Secret key**.
-2. Add `TURNSTILE_SECRET` = secret key to the environment variables (as above).
-3. In `site/contact.html`, just above the *Send enquiry* button, add
+2. In `site/index.html`, just above the *Send enquiry* button, add
    `<div class="cf-turnstile" data-sitekey="YOUR_SITE_KEY"></div>` and in the `<head>`
    `<script src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script>`.
-4. In `site/_headers`, extend the CSP: add `https://challenges.cloudflare.com` to `script-src`
-   and `frame-src`, and to `connect-src`.
+3. In `site/_headers`, add `https://challenges.cloudflare.com` to `script-src` and `frame-src`.
+4. Deploy, check the widget appears, then `npx wrangler pages secret put TURNSTILE_SECRET` and deploy again.
+5. Also add a **rate-limiting rule** (Security → WAF → Rate limiting): path `/api/enquiry`,
+   method POST, 5 requests per minute per IP, action Block.
 
 ## 3. Analytics without cookies
 
@@ -66,6 +70,7 @@ project → *Automatic setup*). No code change is needed and no cookie banner is
 
 - `https://www.shalvitechnologies.com/about` opens the Company page (clean URLs work) and
   `https://www.shalvitechnologies.com/about.html` redirects to it.
+- `https://www.shalvitechnologies.com/contact` jumps to the Contact section of the home page.
 - `https://www.shalvitechnologies.com/SHARE/FTP-HOW-TO.txt` and
   `https://www.shalvitechnologies.com/.wrangler/cache/pages.json` return **404**
   (they were published by the old upload; the new structure never uploads them).
@@ -77,8 +82,9 @@ project → *Automatic setup*). No code change is needed and no cookie banner is
 
 ## 5. Things the code cannot do for you
 
-- **Rotate any credential that was ever committed.** The old upload contained Hostinger FTP
-  details and a Cloudflare account id; the public GitHub history still has them. Change the
-  Hostinger FTP password, and treat the Cloudflare account id as known.
+- **The public GitHub history still contains the old upload**, including the Hostinger FTP host and
+  username and the Cloudflare account id (no password was in it). Turn on two-factor login in
+  Hostinger hPanel, change the FTP password as a precaution, and consider making the repository
+  private or rewriting its history.
 - The public `arvin291/arvin` repository on the same GitHub account contains a Roboflow API key
   inside a notebook. Revoke it in Roboflow and remove it from the notebook.

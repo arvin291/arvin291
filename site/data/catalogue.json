@@ -1,33 +1,250 @@
 {
-  "$comment": "Single source of truth for the product line card. Used today by the enquiry basket; designed to grow into the order page (add sku, price, gst, stock per item). Groups: it, sec, av, power, net, work.",
+  "$comment": "Single source of truth for the product catalogue (16 flyer categories + 4 newer lines). Used today by the enquiry list; designed to grow into the order page (add sku, price, gst, stock per item). Groups: it, sec, av, power, net, work.",
   "groups": {
     "it": "IT & office",
     "sec": "Security & fire",
     "av": "Audio-visual",
     "power": "Power",
     "net": "Networking",
-    "work": "Cyber, forensic & drones"
+    "work": "Cyber · forensic · drones"
   },
   "items": [
-    { "id": "desktops",     "no": 1,  "group": "it",    "category": "Desktops, all-in-ones & laptops",        "brands": ["HP", "Acer", "Dell", "Lenovo"] },
-    { "id": "cctv",         "no": 2,  "group": "sec",   "category": "CCTV cameras & recorders",              "brands": ["CP Plus", "Hikvision", "Sparsh", "Tentronix", "Dahua", "Samsung", "Honeywell", "Panasonic", "Pelco", "Axis", "ACTi", "Matrix", "Secure Eye"] },
-    { "id": "printers",     "no": 3,  "group": "it",    "category": "Multifunction & computer printers",     "brands": ["HP", "Epson", "Canon", "TVS-E", "Ricoh", "Kyocera", "Konica Minolta", "Brother"] },
-    { "id": "videowall",    "no": 4,  "group": "av",    "category": "LED video walls",                       "brands": ["VDT"] },
-    { "id": "boards",       "no": 5,  "group": "av",    "category": "Interactive boards & flat panels",      "brands": ["CP Plus", "Vamaa", "Brio Touch", "Promark"] },
-    { "id": "projectors",   "no": 6,  "group": "av",    "category": "Projectors",                            "brands": ["Epson", "ViewSonic", "BenQ"] },
-    { "id": "ups",          "no": 7,  "group": "power", "category": "UPS & inverters",                       "brands": ["Microtek", "Elnova", "Luminous", "APC", "Emerson"] },
-    { "id": "batteries",    "no": 8,  "group": "power", "category": "Batteries",                             "brands": ["Exide", "Luminous", "Quanta"] },
-    { "id": "servers",      "no": 9,  "group": "it",    "category": "Servers & workstations",                "brands": ["HPE", "HP", "Acer"] },
-    { "id": "biometrics",   "no": 10, "group": "sec",   "category": "Biometrics & access control",           "brands": ["Timewatch", "Realtime", "eSSL", "CP Plus", "Matrix", "Secure Eye"] },
-    { "id": "epabx",        "no": 11, "group": "it",    "category": "Telephone exchanges (EPABX)",           "brands": ["Matrix", "Panasonic", "CCL", "Crystal"] },
-    { "id": "telephones",   "no": 12, "group": "it",    "category": "Telephones",                            "brands": ["Beetel", "Panasonic"] },
-    { "id": "screening",    "no": 13, "group": "sec",   "category": "Boom barriers, DFMD, HHMD & X-ray baggage scanners", "brands": ["Tentronix", "Timewatch", "Hikvision", "Realtime"] },
-    { "id": "fire",         "no": 14, "group": "sec",   "category": "Fire alarm systems",                    "brands": ["Agni", "Cooper", "FAAST", "GST", "Morley", "IAS", "Ravel"] },
-    { "id": "software",     "no": 15, "group": "it",    "category": "Software & licences",                   "brands": ["Windows", "Office", "Busy", "Tally", "Quick Heal"] },
-    { "id": "networking",   "no": 16, "group": "net",   "category": "Networking equipment",                  "brands": ["Digisol", "D-Link", "Cisco", "TP-Link", "Marx"] },
-    { "id": "cyber",        "no": 17, "group": "work",  "category": "Cyber security software",               "brands": ["Specified per requirement"] },
-    { "id": "forensic-sw",  "no": 18, "group": "work",  "category": "Forensic laboratory software",          "brands": ["Specified per laboratory"] },
-    { "id": "forensic-ws",  "no": 19, "group": "work",  "category": "Forensic workstations",                 "brands": ["Specified per requirement"] },
-    { "id": "drones",       "no": 20, "group": "work",  "category": "Drones (unmanned aerial systems)",      "brands": ["Specified per site and task"] }
+    {
+      "id": "desktops",
+      "no": 1,
+      "group": "it",
+      "category": "Desktops, all-in-ones & laptops",
+      "brands": [
+        "HP",
+        "Acer",
+        "Dell",
+        "Lenovo"
+      ]
+    },
+    {
+      "id": "cctv",
+      "no": 2,
+      "group": "sec",
+      "category": "CCTV cameras & recorders",
+      "brands": [
+        "CP Plus",
+        "Hikvision",
+        "Sparsh",
+        "Tentronix",
+        "Dahua",
+        "Samsung",
+        "Honeywell",
+        "Panasonic",
+        "Pelco",
+        "Axis",
+        "ACTi",
+        "Matrix",
+        "Secure Eye"
+      ]
+    },
+    {
+      "id": "printers",
+      "no": 3,
+      "group": "it",
+      "category": "Multifunction & computer printers",
+      "brands": [
+        "HP",
+        "Epson",
+        "Canon",
+        "TVS-E",
+        "Ricoh",
+        "Kyocera",
+        "Konica Minolta",
+        "Brother"
+      ]
+    },
+    {
+      "id": "videowall",
+      "no": 4,
+      "group": "av",
+      "category": "LED video walls",
+      "brands": [
+        "VDT"
+      ]
+    },
+    {
+      "id": "boards",
+      "no": 5,
+      "group": "av",
+      "category": "Interactive boards & flat panels",
+      "brands": [
+        "CP Plus",
+        "Vamaa",
+        "Brio Touch",
+        "Promark"
+      ]
+    },
+    {
+      "id": "projectors",
+      "no": 6,
+      "group": "av",
+      "category": "Projectors",
+      "brands": [
+        "Epson",
+        "ViewSonic",
+        "BenQ"
+      ]
+    },
+    {
+      "id": "ups",
+      "no": 7,
+      "group": "power",
+      "category": "UPS & inverters",
+      "brands": [
+        "Microtek",
+        "Elnova",
+        "Luminous",
+        "APC",
+        "Emerson"
+      ]
+    },
+    {
+      "id": "batteries",
+      "no": 8,
+      "group": "power",
+      "category": "Batteries",
+      "brands": [
+        "Exide",
+        "Luminous",
+        "Quanta"
+      ]
+    },
+    {
+      "id": "servers",
+      "no": 9,
+      "group": "it",
+      "category": "Servers & workstations",
+      "brands": [
+        "HPE",
+        "HP",
+        "Acer"
+      ]
+    },
+    {
+      "id": "biometrics",
+      "no": 10,
+      "group": "sec",
+      "category": "Biometrics & access control",
+      "brands": [
+        "Timewatch",
+        "Realtime",
+        "eSSL",
+        "CP Plus",
+        "Matrix",
+        "Secure Eye"
+      ]
+    },
+    {
+      "id": "epabx",
+      "no": 11,
+      "group": "it",
+      "category": "Telephone exchanges (EPABX)",
+      "brands": [
+        "Matrix",
+        "Panasonic",
+        "CCL",
+        "Crystal"
+      ]
+    },
+    {
+      "id": "telephones",
+      "no": 12,
+      "group": "it",
+      "category": "Telephones",
+      "brands": [
+        "Beetel",
+        "Panasonic"
+      ]
+    },
+    {
+      "id": "screening",
+      "no": 13,
+      "group": "sec",
+      "category": "Boom barriers, DFMD, HHMD & X-ray baggage scanners",
+      "brands": [
+        "Tentronix",
+        "Timewatch",
+        "Hikvision",
+        "Realtime"
+      ]
+    },
+    {
+      "id": "fire",
+      "no": 14,
+      "group": "sec",
+      "category": "Fire alarm systems",
+      "brands": [
+        "Agni",
+        "Cooper",
+        "FAAST",
+        "GST",
+        "Morley",
+        "IAS",
+        "Ravel"
+      ]
+    },
+    {
+      "id": "software",
+      "no": 15,
+      "group": "it",
+      "category": "Software & licences",
+      "brands": [
+        "Microsoft Windows",
+        "Microsoft Office",
+        "Busy",
+        "Tally",
+        "Quick Heal"
+      ]
+    },
+    {
+      "id": "networking",
+      "no": 16,
+      "group": "net",
+      "category": "Networking equipment",
+      "brands": [
+        "Digisol",
+        "D-Link",
+        "Cisco",
+        "TP-Link",
+        "Marx"
+      ]
+    },
+    {
+      "id": "cyber",
+      "no": 17,
+      "group": "work",
+      "category": "Cyber security software",
+      "brands": [],
+      "note": "Specified per requirement"
+    },
+    {
+      "id": "forensic-sw",
+      "no": 18,
+      "group": "work",
+      "category": "Forensic laboratory software",
+      "brands": [],
+      "note": "Specified per laboratory"
+    },
+    {
+      "id": "forensic-ws",
+      "no": 19,
+      "group": "work",
+      "category": "Forensic workstations",
+      "brands": [],
+      "note": "Specified per requirement"
+    },
+    {
+      "id": "drones",
+      "no": 20,
+      "group": "work",
+      "category": "Drones (unmanned aerial systems)",
+      "brands": [],
+      "note": "Specified per site and task"
+    }
   ]
 }

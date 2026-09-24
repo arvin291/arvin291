@@ -3,8 +3,8 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Website Development, Hosting &amp; Management in Lucknow | Shalvi Technologies</title>
-  <meta name="description" content="Websites for institutions, departments and companies in Lucknow — built, hosted with SSL and email, and kept updated under an annual retainer by Shalvi Technologies.">
+  <title>Website Development &amp; Hosting | Shalvi Technologies</title>
+  <meta name="description" content="Websites for institutions and companies in Lucknow: built, hosted with SSL and email, and kept updated by Shalvi Technologies.">
   <link rel="canonical" href="https://www.shalvitechnologies.com/web">
   <meta property="og:title" content="Website development, hosting &amp; management — Shalvi Technologies">
   <meta property="og:description" content="Built, hosted and kept running by the same house that supplies your machines.">
@@ -21,12 +21,11 @@
   <link rel="icon" href="/assets/img/favicon-32.png" type="image/png" sizes="32x32">
   <link rel="apple-touch-icon" href="/assets/img/apple-touch-icon.png">
   <link rel="manifest" href="/site.webmanifest">
-  <link rel="preconnect" href="https://fonts.bunny.net">
   <link rel="preconnect" href="https://fonts.bunny.net" crossorigin>
   <link rel="stylesheet" href="https://fonts.bunny.net/css?family=inter-tight:400,500,600,700|jetbrains-mono:400,600&display=swap">
-  <link rel="stylesheet" href="/assets/css/site.css?v=2026.09">
+  <link rel="stylesheet" href="/assets/css/site.css?v=2026.10">
   <script type="application/ld+json">
-  {"@context":"https://schema.org","@type":"Service","name":"Website development, hosting and management","provider":{"@id":"https://www.shalvitechnologies.com/#business"},"areaServed":{"@type":"State","name":"Uttar Pradesh"},"serviceType":"Web development and hosting","url":"https://www.shalvitechnologies.com/web"}
+  {"@context":"https://schema.org","@type":"Service","@id":"https://www.shalvitechnologies.com/web#service","name":"Website development, hosting and management","provider":{"@id":"https://www.shalvitechnologies.com/#business"},"areaServed":{"@type":"State","name":"Uttar Pradesh"},"serviceType":"Web development and hosting","url":"https://www.shalvitechnologies.com/web"}
   </script>
 </head>
 <body>
@@ -73,7 +72,7 @@
 <!-- @@/icons -->
 <!-- @@header -->
 <a class="skip-link" href="#main">Skip to content</a>
-<header class="site-header" id="top">
+<header class="site-header" id="top" data-header>
   <div class="topbar">
     <div class="container topbar__in">
       <p class="topbar__note"><svg class="ico" aria-hidden="true"><use href="#i-check"/></svg><span class="long">GeM-listed supplier · Lucknow, Uttar Pradesh</span><span class="short">GeM-listed · Lucknow</span></p>
@@ -84,24 +83,25 @@
     </div>
   </div>
   <div class="container nav">
-    <a class="brand" href="/">
+    <a class="brand" href="/#home">
       <img src="/assets/img/emblem-96.webp" srcset="/assets/img/emblem-96.webp 1x, /assets/img/emblem-160.webp 2x" width="48" height="48" alt="" decoding="async">
       <span class="brand__text"><span class="brand__name">Shalvi Technologies</span><span class="brand__tag">Expertise · Experience · Excellence</span></span>
     </a>
     <button class="nav__toggle" type="button" aria-expanded="false" aria-controls="site-nav" data-nav-toggle>
+      <span class="sr-only">Sections menu, now showing: </span><span class="nav__where" data-where>Web services</span>
+      <span class="badge" data-basket-count aria-hidden="true" hidden>0</span>
       <svg class="ico ico--menu" aria-hidden="true"><use href="#i-menu"/></svg>
       <svg class="ico ico--close" aria-hidden="true"><use href="#i-close"/></svg>
-      <span>Menu</span>
     </button>
-    <nav class="nav__links" id="site-nav" aria-label="Primary">
+    <nav class="nav__links" id="site-nav" aria-label="Sections">
       <ul>
-        <li><a href="/" data-page="home">Home</a></li>
-        <li><a href="/products" data-page="products">Products</a></li>
-        <li><a href="/solutions" data-page="solutions">Solutions</a></li>
-        <li><a href="/web" data-page="web" aria-current="page">Web services</a></li>
-        <li><a href="/alliances" data-page="alliances">Alliances</a></li>
-        <li><a href="/about" data-page="about">Company</a></li>
-        <li class="nav__cta"><a class="btn btn--primary btn--sm" href="/contact" data-page="contact">Get a quote<span class="badge" data-basket-count hidden>0</span></a></li>
+        <li><a href="/#home" data-page="home" data-section="home">Home</a></li>
+        <li><a href="/#products" data-page="products" data-section="products">Products</a></li>
+        <li><a href="/#solutions" data-page="solutions" data-section="solutions">Solutions</a></li>
+        <li><a href="/#web" aria-current="page" data-page="web" data-section="web">Web services</a></li>
+        <li><a href="/#alliances" data-page="alliances" data-section="alliances">Alliances</a></li>
+        <li><a href="/#company" data-page="about" data-section="company">Company</a></li>
+        <li class="nav__cta"><a class="btn btn--primary btn--sm" href="/#contact" data-page="contact" data-section="contact" data-label="Contact">Get a quote<span class="badge" data-basket-count aria-hidden="true" hidden>0</span><span class="sr-only" data-basket-sr></span></a></li>
       </ul>
     </nav>
   </div>
@@ -117,7 +117,7 @@
         <h1 id="page-title">Website development, hosting and management.</h1>
         <p class="lede">A public website that matches the office: specified, put on a reliable server, and kept running. The same house that supplies your machines can keep your domain, pages and mailboxes in order.</p>
         <div class="btn-row">
-          <a class="btn btn--gold" href="/contact?interest=web">Enquire for a website</a>
+          <a class="btn btn--gold" href="/?interest=web#contact">Enquire for a website</a>
           <a class="btn btn--ghost-light" href="tel:+916307057085"><svg class="ico" aria-hidden="true"><use href="#i-phone"/></svg>Call&nbsp;63070&nbsp;57085</a>
         </div>
       </div>
@@ -149,8 +149,7 @@
   </section>
 
   <section class="section band--soft" aria-labelledby="take-title">
-    <div class="container split">
-      <div>
+    <div class="container prose">
         <p class="eyebrow">What we take on</p>
         <h2 id="take-title">From a first website to a property that already exists.</h2>
         <p class="lede">New brochure sites, campus and department pages, product catalogues, enquiry forms — and the rescue of a domain that is live but out of date, with its old hosting, mail and DNS untangled.</p>
@@ -161,15 +160,6 @@
           <li><svg class="ico" aria-hidden="true"><use href="#i-check"/></svg>Handover with logins in your name, not ours</li>
         </ul>
       </div>
-      <ul class="values">
-        <li>New website build</li>
-        <li>Domain &amp; hosting</li>
-        <li>SSL &amp; organisation email</li>
-        <li>Content updates</li>
-        <li>Security patches</li>
-        <li>Annual retainers</li>
-      </ul>
-    </div>
   </section>
 
   <section class="section" aria-labelledby="who-title">
@@ -195,7 +185,7 @@
           <p>Send the organisation name, your current domain if any, and what the site must do. We reply with a scope and a price.</p>
         </div>
         <div class="btn-row">
-          <a class="btn btn--gold" href="/contact?interest=web">Enquire for a website</a>
+          <a class="btn btn--gold" href="/?interest=web#contact">Enquire for a website</a>
           <a class="btn btn--wa" href="https://wa.me/916307057085?text=Hello%20Shalvi%20Technologies%2C%20I%20need%20a%20website%20for%3A" target="_blank" rel="noopener"><svg class="ico" aria-hidden="true"><use href="#i-whatsapp"/></svg>WhatsApp</a>
         </div>
       </div>
@@ -208,52 +198,52 @@
   <div class="container">
     <div class="footer__grid">
       <div class="footer__brand">
-        <img src="/assets/img/emblem-160.webp" width="72" height="72" alt="Shalvi Technologies emblem" loading="lazy" decoding="async">
+        <img src="/assets/img/emblem-160.webp" width="72" height="72" alt="" loading="lazy" decoding="async">
         <p class="footer__name">Shalvi Technologies</p>
-        <p>GeM-listed supplier of IT, security, audio-visual and networking systems. Specified, supplied and supported from Lucknow.</p>
+        <p class="footer__about">GeM-listed supplier of IT, security, audio-visual and networking systems. Specified, supplied and supported from Lucknow.</p>
         <address>Plot No. 67–68, Aranya Estate, C.G. City,<br>Ahmamau, Sultanpur Road, Near Law College,<br>Lucknow 226002, Uttar Pradesh</address>
       </div>
-      <nav class="footer__col" aria-label="Practices">
-        <h2>Practices</h2>
+      <nav class="footer__col" aria-label="Solutions">
+        <h2>Solutions</h2>
         <ul>
           <li><a href="/solutions#it">IT &amp; office equipment</a></li>
           <li><a href="/solutions#security">Security &amp; surveillance</a></li>
           <li><a href="/solutions#av">Audio-visual systems</a></li>
           <li><a href="/solutions#network">Campus networking</a></li>
           <li><a href="/solutions#civic">Civic &amp; specialised</a></li>
-          <li><a href="/web">Web development &amp; hosting</a></li>
+          <li><a href="/web">Web services</a></li>
         </ul>
       </nav>
       <nav class="footer__col" aria-label="Company">
         <h2>Company</h2>
         <ul>
-          <li><a href="/about">About Shalvi</a></li>
-          <li><a href="/products">Product line card</a></li>
-          <li><a href="/alliances">OEM alliances</a></li>
+          <li><a href="/about">Company</a></li>
+          <li><a href="/products">Product catalogue</a></li>
+          <li><a href="/alliances">Alliances</a></li>
           <li><a href="/downloads/Shalvi-Technologies-Company-Profile.pdf">Company profile (PDF)</a></li>
-          <li><a href="/contact#faq">Frequently asked questions</a></li>
+          <li><a href="/#faq">Frequently asked questions</a></li>
           <li><a href="/privacy">Privacy</a></li>
         </ul>
       </nav>
-      <div class="footer__col">
+      <div class="footer__col footer__contact">
         <h2>Contact</h2>
-        <ul class="footer__contact">
-          <li><a href="tel:+916307057085"><svg class="ico" aria-hidden="true"><use href="#i-phone"/></svg>+91&nbsp;63070&nbsp;57085</a></li>
-          <li><a href="tel:+919794980001"><svg class="ico" aria-hidden="true"><use href="#i-phone"/></svg>+91&nbsp;97949&nbsp;80001</a></li>
-          <li><a href="https://wa.me/916307057085?text=Hello%20Shalvi%20Technologies%2C%20I%20have%20a%20requirement." target="_blank" rel="noopener"><svg class="ico" aria-hidden="true"><use href="#i-whatsapp"/></svg>WhatsApp</a></li>
-          <li><a href="mailto:info@shalvitechnologies.com"><svg class="ico" aria-hidden="true"><use href="#i-mail"/></svg>info@shalvitechnologies.com</a></li>
-          <li><a href="https://maps.google.com/?q=Plot+67-68+Aranya+Estate+CG+City+Ahmamau+Sultanpur+Road+Lucknow+226002" target="_blank" rel="noopener"><svg class="ico" aria-hidden="true"><use href="#i-pin"/></svg>Directions</a></li>
+        <ul>
+          <li><a href="tel:+916307057085"><svg class="ico" aria-hidden="true"><use href="#i-phone"/></svg><span>+91&nbsp;63070&nbsp;57085</span></a></li>
+          <li><a href="tel:+919794980001"><svg class="ico" aria-hidden="true"><use href="#i-phone"/></svg><span>+91&nbsp;97949&nbsp;80001</span></a></li>
+          <li><a href="https://wa.me/916307057085?text=Hello%20Shalvi%20Technologies%2C%20I%20have%20a%20requirement." target="_blank" rel="noopener"><svg class="ico" aria-hidden="true"><use href="#i-whatsapp"/></svg><span>WhatsApp</span></a></li>
+          <li><a href="mailto:info@shalvitechnologies.com"><svg class="ico" aria-hidden="true"><use href="#i-mail"/></svg><span>info@shalvitechnologies.com</span></a></li>
+          <li><a href="https://maps.google.com/?q=Plot+67-68+Aranya+Estate+CG+City+Ahmamau+Sultanpur+Road+Lucknow+226002" target="_blank" rel="noopener"><svg class="ico" aria-hidden="true"><use href="#i-pin"/></svg><span>Directions</span></a></li>
         </ul>
       </div>
     </div>
     <div class="footer__legal">
       <p>© <span data-year>2026</span> Shalvi Technologies, Lucknow. All rights reserved.</p>
-      <p>Brand and product names belong to their respective owners. OEM authorisation is confirmed for each tender.</p>
+      <p>Brand and product names belong to their respective owners.</p>
     </div>
   </div>
+  <a class="wa-fab" href="https://wa.me/916307057085?text=Hello%20Shalvi%20Technologies%2C%20I%20have%20a%20requirement." target="_blank" rel="noopener" aria-label="Chat with us on WhatsApp"><svg class="ico" aria-hidden="true"><use href="#i-whatsapp"/></svg></a>
 </footer>
-<a class="wa-fab" href="https://wa.me/916307057085?text=Hello%20Shalvi%20Technologies%2C%20I%20have%20a%20requirement." target="_blank" rel="noopener" aria-label="Chat with us on WhatsApp"><svg class="ico" aria-hidden="true"><use href="#i-whatsapp"/></svg></a>
-<script src="/assets/js/site.js?v=2026.09" defer></script>
+<script src="/assets/js/site.js?v=2026.10" defer></script>
 <!-- @@/footer -->
 </body>
 </html>

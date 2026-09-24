@@ -3,14 +3,14 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Product Line Card — Computers, CCTV, Printers, UPS, Networking | Shalvi Technologies Lucknow</title>
-  <meta name="description" content="Twenty product categories and the brands Shalvi Technologies supplies in Lucknow: desktops and laptops, CCTV, printers, video walls, interactive panels, projectors, UPS, servers, biometrics, fire alarm, software and networking. Filter and add to your enquiry.">
+  <title>Product Catalogue | Shalvi Technologies, Lucknow</title>
+  <meta name="description" content="Computers, CCTV, printers, video walls, projectors, UPS, servers, biometrics, fire alarm, software and networking from Shalvi Technologies, Lucknow.">
   <link rel="canonical" href="https://www.shalvitechnologies.com/products">
   <meta name="theme-color" content="#140809">
   <meta property="og:type" content="website">
   <meta property="og:site_name" content="Shalvi Technologies">
-  <meta property="og:title" content="Product line card — Shalvi Technologies, Lucknow">
-  <meta property="og:description" content="Twenty categories, the brands behind them, and an enquiry list you can send in one go.">
+  <meta property="og:title" content="Product catalogue — Shalvi Technologies, Lucknow">
+  <meta property="og:description" content="Sixteen product categories and four newer lines, the brands behind them, and an enquiry list you can send in one go.">
   <meta property="og:url" content="https://www.shalvitechnologies.com/products">
   <meta property="og:image" content="https://www.shalvitechnologies.com/assets/img/og-image.jpg">
   <meta property="og:image:width" content="1200">
@@ -21,10 +21,9 @@
   <link rel="icon" href="/assets/img/favicon-32.png" type="image/png" sizes="32x32">
   <link rel="apple-touch-icon" href="/assets/img/apple-touch-icon.png">
   <link rel="manifest" href="/site.webmanifest">
-  <link rel="preconnect" href="https://fonts.bunny.net">
   <link rel="preconnect" href="https://fonts.bunny.net" crossorigin>
   <link rel="stylesheet" href="https://fonts.bunny.net/css?family=inter-tight:400,500,600,700|jetbrains-mono:400,600&display=swap">
-  <link rel="stylesheet" href="/assets/css/site.css?v=2026.09">
+  <link rel="stylesheet" href="/assets/css/site.css?v=2026.10">
   <script type="application/ld+json">
   {"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":"https://www.shalvitechnologies.com/"},{"@type":"ListItem","position":2,"name":"Products","item":"https://www.shalvitechnologies.com/products"}]}
   </script>
@@ -73,7 +72,7 @@
 <!-- @@/icons -->
 <!-- @@header -->
 <a class="skip-link" href="#main">Skip to content</a>
-<header class="site-header" id="top">
+<header class="site-header" id="top" data-header>
   <div class="topbar">
     <div class="container topbar__in">
       <p class="topbar__note"><svg class="ico" aria-hidden="true"><use href="#i-check"/></svg><span class="long">GeM-listed supplier · Lucknow, Uttar Pradesh</span><span class="short">GeM-listed · Lucknow</span></p>
@@ -84,24 +83,25 @@
     </div>
   </div>
   <div class="container nav">
-    <a class="brand" href="/">
+    <a class="brand" href="/#home">
       <img src="/assets/img/emblem-96.webp" srcset="/assets/img/emblem-96.webp 1x, /assets/img/emblem-160.webp 2x" width="48" height="48" alt="" decoding="async">
       <span class="brand__text"><span class="brand__name">Shalvi Technologies</span><span class="brand__tag">Expertise · Experience · Excellence</span></span>
     </a>
     <button class="nav__toggle" type="button" aria-expanded="false" aria-controls="site-nav" data-nav-toggle>
+      <span class="sr-only">Sections menu, now showing: </span><span class="nav__where" data-where>Products</span>
+      <span class="badge" data-basket-count aria-hidden="true" hidden>0</span>
       <svg class="ico ico--menu" aria-hidden="true"><use href="#i-menu"/></svg>
       <svg class="ico ico--close" aria-hidden="true"><use href="#i-close"/></svg>
-      <span>Menu</span>
     </button>
-    <nav class="nav__links" id="site-nav" aria-label="Primary">
+    <nav class="nav__links" id="site-nav" aria-label="Sections">
       <ul>
-        <li><a href="/" data-page="home">Home</a></li>
-        <li><a href="/products" data-page="products" aria-current="page">Products</a></li>
-        <li><a href="/solutions" data-page="solutions">Solutions</a></li>
-        <li><a href="/web" data-page="web">Web services</a></li>
-        <li><a href="/alliances" data-page="alliances">Alliances</a></li>
-        <li><a href="/about" data-page="about">Company</a></li>
-        <li class="nav__cta"><a class="btn btn--primary btn--sm" href="/contact" data-page="contact">Get a quote<span class="badge" data-basket-count hidden>0</span></a></li>
+        <li><a href="/#home" data-page="home" data-section="home">Home</a></li>
+        <li><a href="/#products" aria-current="page" data-page="products" data-section="products">Products</a></li>
+        <li><a href="/#solutions" data-page="solutions" data-section="solutions">Solutions</a></li>
+        <li><a href="/#web" data-page="web" data-section="web">Web services</a></li>
+        <li><a href="/#alliances" data-page="alliances" data-section="alliances">Alliances</a></li>
+        <li><a href="/#company" data-page="about" data-section="company">Company</a></li>
+        <li class="nav__cta"><a class="btn btn--primary btn--sm" href="/#contact" data-page="contact" data-section="contact" data-label="Contact">Get a quote<span class="badge" data-basket-count aria-hidden="true" hidden>0</span><span class="sr-only" data-basket-sr></span></a></li>
       </ul>
     </nav>
   </div>
@@ -113,11 +113,10 @@
     <div class="container hero__grid">
       <div>
         <ol class="crumbs"><li><a href="/">Home</a></li><li aria-current="page">Products</li></ol>
-        <p class="eyebrow">Line card</p>
+        <p class="eyebrow">Product catalogue</p>
         <h1 id="page-title">Products and brands we supply.</h1>
-        <p class="lede">Twenty categories from the official line card. Filter by area, search a brand, and add categories to your enquiry list — we return current models, prices and GeM listings against your requirement.</p>
+        <p class="lede">Sixteen categories from our printed product flyer plus four newer lines. Filter by area, search a brand, and add categories to your enquiry list. We reply with current models, prices and GeM listings.</p>
       </div>
-      <div class="hero__art"><img src="/assets/img/emblem-320.webp" width="200" height="200" alt="" decoding="async"></div>
     </div>
   </section>
 
@@ -145,7 +144,7 @@
 
       <div class="table-wrap">
         <table class="catalog" data-catalog>
-          <caption>Official product line card — categories and brands</caption>
+          <caption>Product catalogue: categories and brands</caption>
           <thead>
             <tr><th scope="col">No.</th><th scope="col">Category</th><th scope="col">Brands</th><th scope="col"><span class="sr-only">Add to enquiry</span></th></tr>
           </thead>
@@ -164,9 +163,9 @@
             <tr data-group="it" data-text="telephones landline handsets beetel panasonic"><td class="no">12</td><td class="cat">Telephones<br><span class="tag">IT &amp; office</span></td><td class="brands">Beetel, Panasonic</td><td class="act"><button class="btn btn--outline add-btn js-only" type="button" data-add="telephones" data-label="Telephones" aria-pressed="false">Add to enquiry</button></td></tr>
             <tr data-group="sec" data-text="boom barriers dfmd door frame metal detector hhmd hand held x-ray baggage scanner screening tentronix timewatch hikvision realtime"><td class="no">13</td><td class="cat">Boom barriers, DFMD, HHMD &amp; X-ray baggage scanners<br><span class="tag">Security &amp; fire</span></td><td class="brands">Tentronix, Timewatch, Hikvision, Realtime</td><td class="act"><button class="btn btn--outline add-btn js-only" type="button" data-add="screening" data-label="Boom barriers, DFMD, HHMD & X-ray baggage scanners" aria-pressed="false">Add to enquiry</button></td></tr>
             <tr data-group="sec" data-text="fire alarm system detectors panel agni cooper faast gst morley ias ravel honeywell"><td class="no">14</td><td class="cat">Fire alarm systems<br><span class="tag">Security &amp; fire</span></td><td class="brands">Agni, Cooper, FAAST, GST, Morley, IAS, Ravel</td><td class="act"><button class="btn btn--outline add-btn js-only" type="button" data-add="fire" data-label="Fire alarm systems" aria-pressed="false">Add to enquiry</button></td></tr>
-            <tr data-group="it" data-text="software licences windows office busy tally quick heal antivirus microsoft"><td class="no">15</td><td class="cat">Software &amp; licences<br><span class="tag">IT &amp; office</span></td><td class="brands">Windows, Office, Busy, Tally, Quick Heal</td><td class="act"><button class="btn btn--outline add-btn js-only" type="button" data-add="software" data-label="Software & licences" aria-pressed="false">Add to enquiry</button></td></tr>
+            <tr data-group="it" data-text="software licences windows office busy tally quick heal antivirus microsoft"><td class="no">15</td><td class="cat">Software &amp; licences<br><span class="tag">IT &amp; office</span></td><td class="brands">Microsoft Windows and Office, Busy, Tally, Quick Heal</td><td class="act"><button class="btn btn--outline add-btn js-only" type="button" data-add="software" data-label="Software & licences" aria-pressed="false">Add to enquiry</button></td></tr>
             <tr data-group="net" data-text="networking switches routers wireless access points cabling digisol d-link dlink cisco tp-link marx"><td class="no">16</td><td class="cat">Networking equipment<br><span class="tag">Networking</span></td><td class="brands">Digisol, D-Link, Cisco, TP-Link, Marx</td><td class="act"><button class="btn btn--outline add-btn js-only" type="button" data-add="networking" data-label="Networking equipment" aria-pressed="false">Add to enquiry</button></td></tr>
-            <tr data-group="work" data-text="cyber security software endpoint firewall antivirus email security"><td class="no">17</td><td class="cat">Cyber security software<br><span class="tag tag--gold">Specified per requirement</span></td><td class="brands">Endpoint, network and email security packages — current products confirmed against the indent</td><td class="act"><button class="btn btn--outline add-btn js-only" type="button" data-add="cyber" data-label="Cyber security software" aria-pressed="false">Add to enquiry</button></td></tr>
+            <tr data-group="work" data-text="cyber security software endpoint firewall antivirus email security"><td class="no">17</td><td class="cat">Cyber security software<br><span class="tag tag--gold">Specified per requirement</span></td><td class="brands">Endpoint, network and email security packages — products confirmed against the requirement</td><td class="act"><button class="btn btn--outline add-btn js-only" type="button" data-add="cyber" data-label="Cyber security software" aria-pressed="false">Add to enquiry</button></td></tr>
             <tr data-group="work" data-text="forensic laboratory software lab set-up fsl"><td class="no">18</td><td class="cat">Forensic laboratory software<br><span class="tag tag--gold">Specified per laboratory</span></td><td class="brands">Laboratory set-up software, specified against the lab and its accreditation needs</td><td class="act"><button class="btn btn--outline add-btn js-only" type="button" data-add="forensic-sw" data-label="Forensic laboratory software" aria-pressed="false">Add to enquiry</button></td></tr>
             <tr data-group="work" data-text="forensic workstations desktop analysis hardware"><td class="no">19</td><td class="cat">Forensic workstations<br><span class="tag tag--gold">Specified per requirement</span></td><td class="brands">Desktop workstations built for forensic analysis; models confirmed before a bid</td><td class="act"><button class="btn btn--outline add-btn js-only" type="button" data-add="forensic-ws" data-label="Forensic workstations" aria-pressed="false">Add to enquiry</button></td></tr>
             <tr data-group="work" data-text="drones uav unmanned aerial systems survey surveillance"><td class="no">20</td><td class="cat">Drones (unmanned aerial systems)<br><span class="tag tag--gold">Specified per site and task</span></td><td class="brands">Airframe and payload chosen for survey, surveillance or inspection tasks</td><td class="act"><button class="btn btn--outline add-btn js-only" type="button" data-add="drones" data-label="Drones (unmanned aerial systems)" aria-pressed="false">Add to enquiry</button></td></tr>
@@ -177,21 +176,21 @@
 
       <div class="notice mt-2">
         <svg class="ico" aria-hidden="true"><use href="#i-doc"/></svg>
-        <p>Brand and product names belong to their respective owners. Channel authorisation and live GeM SKUs are confirmed for each requirement before we quote. Categories 17–20 are capability areas: current products are confirmed against your indent rather than listed as fixed brands.</p>
+        <p>Brand and product names belong to their respective owners. Channel authorisation and live GeM SKUs are confirmed for each requirement before we quote. Categories 17–20 are newer lines: products are chosen against your requirement rather than listed as fixed brands.</p>
       </div>
 
       <div class="grid grid--2 mt-2">
         <div class="card">
           <div class="card__icon"><svg class="ico" aria-hidden="true"><use href="#i-list"/></svg></div>
           <h3>Your enquiry list</h3>
-          <p>Tap “Add to enquiry” on any category. The list is saved on this device and goes with your message on the contact page.</p>
-          <p class="mt-1"><a class="btn btn--primary" href="/contact">Send my enquiry list<span class="badge" data-basket-count hidden>0</span></a></p>
+          <p>Tap “Add to enquiry” on any category. The list is saved on this device and goes with your message in the enquiry form.</p>
+          <p class="mt-1"><a class="btn btn--primary" href="/#contact">Send my enquiry list<span class="badge" data-basket-count hidden>0</span></a></p>
         </div>
         <div class="card">
           <div class="card__icon"><svg class="ico" aria-hidden="true"><use href="#i-download"/></svg></div>
           <h3>Need it on paper?</h3>
-          <p>Download the company profile with the printed line card, or print this page — the full table prints even when a filter is active.</p>
-          <p class="mt-1"><a class="btn btn--outline" href="/downloads/Shalvi-Technologies-Company-Profile.pdf"><svg class="ico" aria-hidden="true"><use href="#i-download"/></svg>Company profile (PDF)</a></p>
+          <p>Download the printed product flyer, or print this page. The full table prints even when a filter is active.</p>
+          <p class="mt-1"><a class="btn btn--outline" href="/assets/img/flyer-1024.jpg"><svg class="ico" aria-hidden="true"><use href="#i-download"/></svg>Product flyer (JPG)</a></p>
         </div>
       </div>
     </div>
@@ -203,10 +202,10 @@
         <div>
           <p class="eyebrow">Not on the list?</p>
           <h2 id="cta-title">Ask anyway.</h2>
-          <p>Our alliances reach beyond the printed flyer. Tell us the item, quantity and site and we will confirm the channel and quote.</p>
+          <p>We supply more than the flyer lists. Tell us the item, quantity and site and we will confirm the brand and quote.</p>
         </div>
         <div class="btn-row">
-          <a class="btn btn--gold" href="/contact">Get a quote</a>
+          <a class="btn btn--gold" href="/#contact">Get a quote</a>
           <a class="btn btn--wa" href="https://wa.me/916307057085?text=Hello%20Shalvi%20Technologies%2C%20I%20need%20a%20quote%20for%3A" target="_blank" rel="noopener"><svg class="ico" aria-hidden="true"><use href="#i-whatsapp"/></svg>WhatsApp</a>
         </div>
       </div>
@@ -219,52 +218,52 @@
   <div class="container">
     <div class="footer__grid">
       <div class="footer__brand">
-        <img src="/assets/img/emblem-160.webp" width="72" height="72" alt="Shalvi Technologies emblem" loading="lazy" decoding="async">
+        <img src="/assets/img/emblem-160.webp" width="72" height="72" alt="" loading="lazy" decoding="async">
         <p class="footer__name">Shalvi Technologies</p>
-        <p>GeM-listed supplier of IT, security, audio-visual and networking systems. Specified, supplied and supported from Lucknow.</p>
+        <p class="footer__about">GeM-listed supplier of IT, security, audio-visual and networking systems. Specified, supplied and supported from Lucknow.</p>
         <address>Plot No. 67–68, Aranya Estate, C.G. City,<br>Ahmamau, Sultanpur Road, Near Law College,<br>Lucknow 226002, Uttar Pradesh</address>
       </div>
-      <nav class="footer__col" aria-label="Practices">
-        <h2>Practices</h2>
+      <nav class="footer__col" aria-label="Solutions">
+        <h2>Solutions</h2>
         <ul>
           <li><a href="/solutions#it">IT &amp; office equipment</a></li>
           <li><a href="/solutions#security">Security &amp; surveillance</a></li>
           <li><a href="/solutions#av">Audio-visual systems</a></li>
           <li><a href="/solutions#network">Campus networking</a></li>
           <li><a href="/solutions#civic">Civic &amp; specialised</a></li>
-          <li><a href="/web">Web development &amp; hosting</a></li>
+          <li><a href="/web">Web services</a></li>
         </ul>
       </nav>
       <nav class="footer__col" aria-label="Company">
         <h2>Company</h2>
         <ul>
-          <li><a href="/about">About Shalvi</a></li>
-          <li><a href="/products">Product line card</a></li>
-          <li><a href="/alliances">OEM alliances</a></li>
+          <li><a href="/about">Company</a></li>
+          <li><a href="/products">Product catalogue</a></li>
+          <li><a href="/alliances">Alliances</a></li>
           <li><a href="/downloads/Shalvi-Technologies-Company-Profile.pdf">Company profile (PDF)</a></li>
-          <li><a href="/contact#faq">Frequently asked questions</a></li>
+          <li><a href="/#faq">Frequently asked questions</a></li>
           <li><a href="/privacy">Privacy</a></li>
         </ul>
       </nav>
-      <div class="footer__col">
+      <div class="footer__col footer__contact">
         <h2>Contact</h2>
-        <ul class="footer__contact">
-          <li><a href="tel:+916307057085"><svg class="ico" aria-hidden="true"><use href="#i-phone"/></svg>+91&nbsp;63070&nbsp;57085</a></li>
-          <li><a href="tel:+919794980001"><svg class="ico" aria-hidden="true"><use href="#i-phone"/></svg>+91&nbsp;97949&nbsp;80001</a></li>
-          <li><a href="https://wa.me/916307057085?text=Hello%20Shalvi%20Technologies%2C%20I%20have%20a%20requirement." target="_blank" rel="noopener"><svg class="ico" aria-hidden="true"><use href="#i-whatsapp"/></svg>WhatsApp</a></li>
-          <li><a href="mailto:info@shalvitechnologies.com"><svg class="ico" aria-hidden="true"><use href="#i-mail"/></svg>info@shalvitechnologies.com</a></li>
-          <li><a href="https://maps.google.com/?q=Plot+67-68+Aranya+Estate+CG+City+Ahmamau+Sultanpur+Road+Lucknow+226002" target="_blank" rel="noopener"><svg class="ico" aria-hidden="true"><use href="#i-pin"/></svg>Directions</a></li>
+        <ul>
+          <li><a href="tel:+916307057085"><svg class="ico" aria-hidden="true"><use href="#i-phone"/></svg><span>+91&nbsp;63070&nbsp;57085</span></a></li>
+          <li><a href="tel:+919794980001"><svg class="ico" aria-hidden="true"><use href="#i-phone"/></svg><span>+91&nbsp;97949&nbsp;80001</span></a></li>
+          <li><a href="https://wa.me/916307057085?text=Hello%20Shalvi%20Technologies%2C%20I%20have%20a%20requirement." target="_blank" rel="noopener"><svg class="ico" aria-hidden="true"><use href="#i-whatsapp"/></svg><span>WhatsApp</span></a></li>
+          <li><a href="mailto:info@shalvitechnologies.com"><svg class="ico" aria-hidden="true"><use href="#i-mail"/></svg><span>info@shalvitechnologies.com</span></a></li>
+          <li><a href="https://maps.google.com/?q=Plot+67-68+Aranya+Estate+CG+City+Ahmamau+Sultanpur+Road+Lucknow+226002" target="_blank" rel="noopener"><svg class="ico" aria-hidden="true"><use href="#i-pin"/></svg><span>Directions</span></a></li>
         </ul>
       </div>
     </div>
     <div class="footer__legal">
       <p>© <span data-year>2026</span> Shalvi Technologies, Lucknow. All rights reserved.</p>
-      <p>Brand and product names belong to their respective owners. OEM authorisation is confirmed for each tender.</p>
+      <p>Brand and product names belong to their respective owners.</p>
     </div>
   </div>
+  <a class="wa-fab" href="https://wa.me/916307057085?text=Hello%20Shalvi%20Technologies%2C%20I%20have%20a%20requirement." target="_blank" rel="noopener" aria-label="Chat with us on WhatsApp"><svg class="ico" aria-hidden="true"><use href="#i-whatsapp"/></svg></a>
 </footer>
-<a class="wa-fab" href="https://wa.me/916307057085?text=Hello%20Shalvi%20Technologies%2C%20I%20have%20a%20requirement." target="_blank" rel="noopener" aria-label="Chat with us on WhatsApp"><svg class="ico" aria-hidden="true"><use href="#i-whatsapp"/></svg></a>
-<script src="/assets/js/site.js?v=2026.09" defer></script>
+<script src="/assets/js/site.js?v=2026.10" defer></script>
 <!-- @@/footer -->
 </body>
 </html>

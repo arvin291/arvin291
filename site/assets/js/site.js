@@ -1,23 +1,37 @@
-/* Shalvi Technologies — site behaviour (progressive enhancement; the site works without it)
-   1. mobile navigation   2. catalogue filters + search   3. enquiry basket
-   4. enquiry form (API → email; falls back to mail app / WhatsApp)   5. small helpers */
+/* Shalvi Technologies — site behaviour. Progressive enhancement: every page works without it.
+   1. header measurements   2. menu + section capsule   3. scroll-spy (one-scroll home)
+   4. catalogue filters     5. enquiry list (basket)    6. enquiry form   7. helpers */
 (function () {
   "use strict";
-  document.documentElement.classList.add("js");
+  var root = document.documentElement;
+  root.classList.add("js");
+  var $ = function (sel, ctx) { return (ctx || document).querySelector(sel); };
+  var $$ = function (sel, ctx) { return Array.prototype.slice.call((ctx || document).querySelectorAll(sel)); };
+  var DESKTOP = "(min-width: 68.8125em)", PHONE = "(max-width: 45em)";
 
-  var $ = function (sel, root) { return (root || document).querySelector(sel); };
-  var $$ = function (sel, root) { return Array.prototype.slice.call((root || document).querySelectorAll(sel)); };
+  /* ---------- 1. header measurements (used for anchor offsets) ---------- */
+  var header = $("[data-header]");
+  var topbar = header && $(".topbar", header);
+  var measure = function () {
+    if (!header) return;
+    var tb = topbar ? topbar.offsetHeight : 0;
+    var stuck = window.matchMedia(PHONE).matches ? header.offsetHeight - tb : header.offsetHeight;
+    root.style.setProperty("--topbar-h", tb + "px");
+    root.style.setProperty("--hdr", stuck + "px");
+  };
+  measure();
+  window.addEventListener("resize", measure);
 
-  /* ---------- 1. navigation ---------- */
+  /* ---------- 2. menu + section capsule ---------- */
   var toggle = $("[data-nav-toggle]");
   var nav = toggle && document.getElementById(toggle.getAttribute("aria-controls"));
+  var where = $("[data-where]");
+  var setOpen = function (open) {
+    if (!nav) return;
+    nav.classList.toggle("is-open", open);
+    toggle.setAttribute("aria-expanded", open ? "true" : "false");
+  };
   if (toggle && nav) {
-    var label = $("span", toggle);
-    var setOpen = function (open) {
-      nav.classList.toggle("is-open", open);
-      toggle.setAttribute("aria-expanded", open ? "true" : "false");
-      if (label) label.textContent = open ? "Close" : "Menu";
-    };
     toggle.addEventListener("click", function () { setOpen(toggle.getAttribute("aria-expanded") !== "true"); });
     document.addEventListener("keydown", function (e) {
       if (e.key === "Escape" && toggle.getAttribute("aria-expanded") === "true") { setOpen(false); toggle.focus(); }
@@ -25,12 +39,54 @@
     document.addEventListener("click", function (e) {
       if (toggle.getAttribute("aria-expanded") === "true" && !nav.contains(e.target) && !toggle.contains(e.target)) setOpen(false);
     });
-    var mq = window.matchMedia("(min-width: 961px)");
-    var onMq = function (m) { if (m.matches) setOpen(false); };
+    nav.addEventListener("focusout", function (e) {
+      if (e.relatedTarget && !nav.contains(e.relatedTarget) && e.relatedTarget !== toggle) setOpen(false);
+    });
+    $$("a", nav).forEach(function (a) { a.addEventListener("click", function () { setOpen(false); }); });
+    var mq = window.matchMedia(DESKTOP);
+    var onMq = function (m) { if (m.matches) setOpen(false); measure(); };
     if (mq.addEventListener) mq.addEventListener("change", onMq); else mq.addListener(onMq);
   }
+  var labelOf = function (a) { return a.getAttribute("data-label") || a.textContent.replace(/\s+\d+\s*$/, "").trim(); };
+  var showWhere = function (text) {
+    if (!where || where.textContent === text) return;
+    where.classList.add("is-swapping");
+    window.setTimeout(function () { where.textContent = text; where.classList.remove("is-swapping"); }, 120);
+  };
 
-  /* ---------- 2. catalogue filters + search ---------- */
+  /* ---------- 3. scroll-spy on the one-scroll home ---------- */
+  var sections = $$("[data-spy]");
+  if (sections.length && nav) {
+    var linkFor = {};
+    $$("a[data-section]", nav).forEach(function (a) { linkFor[a.getAttribute("data-section")] = a; });
+    var current = null;
+    var activate = function (id) {
+      if (id === current) return;
+      current = id;
+      Object.keys(linkFor).forEach(function (k) {
+        if (k === id) linkFor[k].setAttribute("aria-current", "location");
+        else linkFor[k].removeAttribute("aria-current");
+      });
+      if (linkFor[id]) showWhere(labelOf(linkFor[id]));
+    };
+    var ticking = false;
+    var spy = function () {
+      ticking = false;
+      var line = (parseFloat(getComputedStyle(root).getPropertyValue("--hdr")) || 100) + window.innerHeight * 0.25;
+      var id = sections[0].id;
+      for (var i = 0; i < sections.length; i++) {
+        if (sections[i].getBoundingClientRect().top <= line) id = sections[i].id;
+      }
+      if (window.innerHeight + window.scrollY >= document.documentElement.scrollHeight - 4) id = sections[sections.length - 1].id;
+      activate(id);
+    };
+    window.addEventListener("scroll", function () { if (!ticking) { ticking = true; window.requestAnimationFrame(spy); } }, { passive: true });
+    window.addEventListener("resize", spy);
+    window.addEventListener("hashchange", spy);
+    spy();
+  }
+
+  /* ---------- 4. catalogue filters + search ---------- */
   var catalog = $("[data-catalog]");
   if (catalog) {
     var rows = $$("tbody tr", catalog);
@@ -40,12 +96,10 @@
     var count = $("[data-count]");
     var state = { group: "all", q: "" };
     var apply = function () {
-      var q = state.q.trim().toLowerCase();
-      var shown = 0;
+      var q = state.q.trim().toLowerCase(), shown = 0;
       rows.forEach(function (row) {
-        var okGroup = state.group === "all" || row.getAttribute("data-group") === state.group;
-        var okText = !q || (row.getAttribute("data-text") || row.textContent).toLowerCase().indexOf(q) !== -1;
-        var show = okGroup && okText;
+        var show = (state.group === "all" || row.getAttribute("data-group") === state.group) &&
+          (!q || (row.getAttribute("data-text") + " " + row.textContent).toLowerCase().indexOf(q) !== -1);
         row.hidden = !show;
         if (show) shown++;
       });
@@ -61,40 +115,56 @@
     });
     if (search) {
       search.addEventListener("input", function () { state.q = search.value; apply(); });
+      search.addEventListener("keydown", function (e) { if (e.key === "Enter") e.preventDefault(); });
     }
-    // deep link: /products?group=sec or #sec
-    var hash = (location.hash || "").replace("#", "");
-    var param = new URLSearchParams(location.search).get("group");
-    var pre = param || hash;
+    var pre = new URLSearchParams(location.search).get("group") || (location.hash || "").slice(1);
     chips.forEach(function (chip) { if (chip.getAttribute("data-filter") === pre) chip.click(); });
     apply();
   }
 
-  /* ---------- 3. enquiry basket (localStorage) ---------- */
-  var KEY = "st-enquiry-items";
-  var readBasket = function () { try { return JSON.parse(localStorage.getItem(KEY) || "[]"); } catch (e) { return []; } };
-  var writeBasket = function (items) { try { localStorage.setItem(KEY, JSON.stringify(items)); } catch (e) { /* private mode */ } };
+  /* ---------- 5. enquiry list (kept in memory, mirrored to localStorage) ---------- */
+  var KEY = "st-enquiry-items", memory = null;
+  var readBasket = function () {
+    if (memory) return memory.slice();
+    try { memory = JSON.parse(localStorage.getItem(KEY) || "[]"); } catch (e) { memory = []; }
+    if (!Array.isArray(memory)) memory = [];
+    return memory.slice();
+  };
+  var writeBasket = function (items) {
+    memory = items.slice();
+    try { localStorage.setItem(KEY, JSON.stringify(items)); } catch (e) { /* private mode: memory only */ }
+  };
+  var announce = function (msg) { $$("[data-basket-live]").forEach(function (el) { el.textContent = msg; }); };
   var renderBadges = function (items) {
     $$("[data-basket-count]").forEach(function (b) { b.textContent = String(items.length); b.hidden = items.length === 0; });
+    $$("[data-basket-sr]").forEach(function (s) { s.textContent = items.length ? ", " + items.length + " in your enquiry list" : ""; });
   };
-  var renderList = function (items) {
+  var renderList = function (items, focusIndex) {
     var list = $("[data-basket-list]");
     var field = $("[data-basket-field]");
-    if (field) field.value = items.map(function (i) { return "- " + i.label; }).join("\n");
     var clear = $("[data-basket-clear]");
+    if (field) field.value = items.map(function (i) { return "- " + i.label; }).join("\n");
     if (clear) clear.hidden = items.length === 0;
     if (!list) return;
-    list.innerHTML = "";
     var emptyMsg = $("[data-basket-empty]");
     if (emptyMsg) emptyMsg.hidden = items.length !== 0;
-    items.forEach(function (item) {
+    list.textContent = "";
+    items.forEach(function (item, idx) {
       var li = document.createElement("li");
       var span = document.createElement("span"); span.textContent = item.label;
       var btn = document.createElement("button"); btn.type = "button"; btn.setAttribute("aria-label", "Remove " + item.label);
       btn.innerHTML = '<svg class="ico" aria-hidden="true"><use href="#i-trash"/></svg>';
-      btn.addEventListener("click", function () { setBasket(readBasket().filter(function (i) { return i.id !== item.id; })); });
+      btn.addEventListener("click", function () {
+        setBasket(readBasket().filter(function (i) { return i.id !== item.id; }), idx);
+        announce(item.label + " removed from your enquiry list.");
+      });
       li.appendChild(span); li.appendChild(btn); list.appendChild(li);
     });
+    if (typeof focusIndex === "number") {
+      var btns = $$("button", list);
+      var target = btns[Math.min(focusIndex, btns.length - 1)] || $("#basket-title");
+      if (target) target.focus();
+    }
   };
   var renderButtons = function (items) {
     var ids = items.map(function (i) { return i.id; });
@@ -104,118 +174,175 @@
       btn.innerHTML = on ? '<svg class="ico" aria-hidden="true"><use href="#i-check"/></svg>Added' : '<svg class="ico" aria-hidden="true"><use href="#i-plus"/></svg>Add to enquiry';
     });
   };
-  var setBasket = function (items) { writeBasket(items); renderBadges(items); renderList(items); renderButtons(items); };
+  var setBasket = function (items, focusIndex) { writeBasket(items); renderBadges(items); renderList(items, focusIndex); renderButtons(items); };
   $$("[data-add]").forEach(function (btn) {
     btn.addEventListener("click", function () {
       var id = btn.getAttribute("data-add"), label = btn.getAttribute("data-label") || id;
-      var items = readBasket();
-      if (items.some(function (i) { return i.id === id; })) items = items.filter(function (i) { return i.id !== id; });
-      else items.push({ id: id, label: label });
+      var items = readBasket(), had = items.some(function (i) { return i.id === id; });
+      items = had ? items.filter(function (i) { return i.id !== id; }) : items.concat([{ id: id, label: label }]);
       setBasket(items);
-      var live = $("[data-basket-live]");
-      if (live) live.textContent = items.some(function (i) { return i.id === id; }) ? label + " added to your enquiry list." : label + " removed from your enquiry list.";
+      announce(label + (had ? " removed from" : " added to") + " your enquiry list. " + items.length + " in total.");
     });
   });
   var clearBtn = $("[data-basket-clear]");
-  if (clearBtn) clearBtn.addEventListener("click", function () { setBasket([]); });
+  if (clearBtn) clearBtn.addEventListener("click", function () { setBasket([], 0); announce("Enquiry list cleared."); });
   setBasket(readBasket());
 
-  /* ---------- 4. enquiry form ---------- */
+  /* ---------- 6. enquiry form ---------- */
   var form = $("[data-enquiry]");
   if (form) {
+    form.setAttribute("novalidate", "");
     var status = $("[data-form-status]");
     var submitBtn = $("button[type=submit]", form);
-    var configured = null; // null = unknown, true = API delivers email, false = fall back to mail app
     var endpoint = form.getAttribute("action") || "/api/enquiry";
     var TO = form.getAttribute("data-to") || "info@shalvitechnologies.com";
     var WA = form.getAttribute("data-wa") || "916307057085";
+    var configured = null;
+    var fieldOf = function (name) { return form.querySelector("[name=" + name + "]"); };
 
-    // Ask the API whether email delivery is configured (silent; assume not if unreachable).
+    // preselect the area from ?interest=web or from a link with data-interest
+    var interestSel = fieldOf("interest");
+    var setInterest = function (key) {
+      if (!interestSel || !key) return;
+      $$("option", interestSel).forEach(function (o) { if (o.value === key) interestSel.value = key; });
+    };
+    setInterest(new URLSearchParams(location.search).get("interest"));
+    $$("[data-interest]").forEach(function (a) { a.addEventListener("click", function () { setInterest(a.getAttribute("data-interest")); }); });
+
     if (window.fetch) {
-      fetch(endpoint, { method: "GET", headers: { "Accept": "application/json" } })
+      fetch(endpoint, { headers: { "Accept": "application/json" } })
         .then(function (r) { return r.ok ? r.json() : null; })
         .then(function (j) { configured = !!(j && j.configured); })
         .catch(function () { configured = false; });
     } else { configured = false; }
 
-    var showStatus = function (kind, html) {
+    var el = function (tag, cls, text) { var n = document.createElement(tag); if (cls) n.className = cls; if (text) n.textContent = text; return n; };
+    var showStatus = function (kind, nodes) {
       if (!status) return;
       status.className = "form-status is-visible form-status--" + kind;
-      status.innerHTML = html;
+      status.textContent = "";
+      nodes.forEach(function (n) { status.appendChild(n); });
       status.focus();
     };
-    var fieldOf = function (name) { return form.querySelector("[name=" + name + "]"); };
+    var linkBtn = function (cls, href, text, blank) {
+      var a = el("a", "btn " + cls, text); a.href = href;
+      if (blank) { a.target = "_blank"; a.rel = "noopener"; }
+      return a;
+    };
     var setError = function (input, msg) {
       var field = input.closest(".field"); if (!field) return;
       var err = field.querySelector(".error");
       field.classList.toggle("is-invalid", !!msg);
-      input.setAttribute("aria-invalid", msg ? "true" : "false");
+      if (msg) input.setAttribute("aria-invalid", "true"); else input.removeAttribute("aria-invalid");
       if (err) err.textContent = msg || "";
     };
+    var PHONE_RE = /^[+\d][\d\s\-()]{6,}$/, EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
     var validate = function () {
-      var ok = true, first = null;
-      $$("[required]", form).forEach(function (input) {
+      var first = null;
+      [fieldOf("name"), fieldOf("email"), fieldOf("phone"), fieldOf("message")].forEach(function (input) {
+        if (!input) return;
         var v = input.value.trim(), msg = "";
-        if (!v) msg = "This field is required.";
-        else if (input.type === "email" && !/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(v)) msg = "Enter a valid email address, e.g. name@organisation.in";
-        else if (input.name === "phone" && v && !/^[+\d][\d\s\-()]{6,}$/.test(v)) msg = "Enter a valid phone number.";
+        if (input.required && !v) msg = "This field is required.";
+        else if (input.type === "email" && v && !EMAIL_RE.test(v)) msg = "Enter a valid email address, for example name@organisation.in";
+        else if (input.name === "phone" && v && !PHONE_RE.test(v)) msg = "Enter a valid phone number.";
         setError(input, msg);
-        if (msg) { ok = false; if (!first) first = input; }
+        if (msg && !first) first = input;
       });
-      var phone = fieldOf("phone");
-      if (phone && phone.value.trim() && !/^[+\d][\d\s\-()]{6,}$/.test(phone.value.trim())) { setError(phone, "Enter a valid phone number."); ok = false; if (!first) first = phone; }
       if (first) first.focus();
-      return ok;
+      return !first;
     };
     var payload = function () {
       var d = {};
-      $$("input, select, textarea", form).forEach(function (el) { if (el.name) d[el.name] = el.value; });
+      $$("input, select, textarea", form).forEach(function (f) {
+        if (!f.name) return;
+        d[f.name] = f.tagName === "SELECT" ? (f.value ? f.options[f.selectedIndex].text : "") : f.value;
+      });
       return d;
     };
     var messageText = function (d) {
       return "Name: " + d.name + "\nOrganisation: " + (d.org || "-") + "\nEmail: " + d.email + "\nPhone: " + (d.phone || "-") +
-        "\nInterest: " + (d.interest || "-") + (d.items ? "\n\nRequirement list:\n" + d.items : "") + "\n\nMessage:\n" + d.message;
+        "\nInterest: " + (d.interest || "-") + (d.items ? "\n\nEnquiry list:\n" + d.items : "") + "\n\nRequirement:\n" + d.message;
     };
     var fallback = function (d, note) {
-      var subject = "Enquiry — " + (d.interest || "General") + " — " + d.name;
-      var mailto = "mailto:" + TO + "?subject=" + encodeURIComponent(subject) + "&body=" + encodeURIComponent(messageText(d));
-      var wa = "https://wa.me/" + WA + "?text=" + encodeURIComponent("Hello Shalvi Technologies,\n" + messageText(d));
-      showStatus("warn",
-        "<h3>Send it the way that suits you</h3><p>" + note + " Your details are still in the form below — nothing has been lost.</p>" +
-        '<div class="btn-row"><a class="btn btn--primary" href="' + mailto + '">Open in my email app</a>' +
-        '<a class="btn btn--wa" href="' + wa + '" target="_blank" rel="noopener">Send on WhatsApp</a>' +
-        '<a class="btn btn--outline" href="tel:+91' + WA.slice(2) + '">Call +91 ' + WA.slice(2, 7) + " " + WA.slice(7) + "</a></div>");
+      var subject = "Enquiry: " + (d.interest || "General") + " — " + d.name;
+      var row = el("div", "btn-row");
+      row.appendChild(linkBtn("btn--primary", "mailto:" + TO + "?subject=" + encodeURIComponent(subject) + "&body=" + encodeURIComponent(messageText(d)), "Open in my email app"));
+      row.appendChild(linkBtn("btn--wa", "https://wa.me/" + WA + "?text=" + encodeURIComponent("Hello Shalvi Technologies,\n" + messageText(d)), "Send on WhatsApp", true));
+      row.appendChild(linkBtn("btn--outline", "tel:+" + WA, "Call +91 " + WA.slice(2, 7) + " " + WA.slice(7)));
+      showStatus("warn", [el("h3", "", "Send it the way that suits you"), el("p", "", note + " Your details are still in the form below; nothing has been lost."), row]);
+    };
+    var busy = false;
+    var setBusy = function (on) {
+      busy = on;
+      if (!submitBtn) return;
+      if (on) { submitBtn.setAttribute("aria-disabled", "true"); submitBtn.dataset.html = submitBtn.innerHTML; submitBtn.textContent = "Sending…"; }
+      else { submitBtn.removeAttribute("aria-disabled"); if (submitBtn.dataset.html) submitBtn.innerHTML = submitBtn.dataset.html; }
+    };
+    var success = function (ref) {
+      form.hidden = true;
+      var p = el("p", "", "Reference ");
+      p.appendChild(el("strong", "mono", ref));
+      p.appendChild(document.createTextNode(". We reply on working days. For anything urgent call +91 63070 57085."));
+      var again = el("button", "btn btn--outline", "Send another enquiry"); again.type = "button";
+      again.addEventListener("click", function () {
+        form.reset();
+        $$("[aria-invalid]", form).forEach(function (i) { setError(i, ""); });
+        form.hidden = false; status.className = "form-status"; status.textContent = "";
+        var n = fieldOf("name"); if (n) n.focus();
+      });
+      var row = el("div", "btn-row"); row.appendChild(again);
+      showStatus("ok", [el("h3", "", "Thank you. Your enquiry is with us."), p, row]);
+      setBasket([]);
     };
     form.addEventListener("submit", function (e) {
       e.preventDefault();
-      if (!validate()) return;
+      if (busy || !validate()) return;
       var d = payload();
       if (configured === false) { fallback(d, "Online delivery is not switched on yet, so use one of these instead."); return; }
-      submitBtn.disabled = true; submitBtn.setAttribute("aria-busy", "true");
-      var oldText = submitBtn.textContent; submitBtn.textContent = "Sending…";
+      setBusy(true);
       fetch(endpoint, { method: "POST", headers: { "Content-Type": "application/json", "Accept": "application/json" }, body: JSON.stringify(d) })
-        .then(function (r) { return r.json().then(function (j) { return { ok: r.ok, status: r.status, body: j }; }); })
+        .then(function (r) {
+          return r.text().then(function (t) { var j = null; try { j = JSON.parse(t); } catch (x) { /* not JSON */ } return { ok: r.ok, status: r.status, body: j }; });
+        }, function () { return null; })
         .then(function (res) {
-          if (res.ok && res.body && res.body.ok) {
-            form.hidden = true;
-            showStatus("ok", "<h3>Thank you — your enquiry is with us.</h3><p>Reference <strong class=\"mono\">" + (res.body.ref || "") + "</strong>. We reply on working days, usually within one business day. For anything urgent call <a href=\"tel:+916307057085\">+91 63070 57085</a>.</p>" +
-              '<div class="btn-row"><button type="button" class="btn btn--outline" data-again>Send another enquiry</button></div>');
-            var again = $("[data-again]"); if (again) again.addEventListener("click", function () { form.hidden = false; form.reset(); status.className = "form-status"; setBasket([]); });
-            setBasket([]);
-          } else if (res.status === 400 && res.body && res.body.errors) {
-            Object.keys(res.body.errors).forEach(function (k) { var inp = fieldOf(k); if (inp) setError(inp, res.body.errors[k]); });
-            showStatus("err", "<p>Please check the highlighted fields and try again.</p>");
-          } else {
-            fallback(d, res.status === 503 ? "Online delivery is not switched on yet, so use one of these instead." : "The online form could not send just now, so use one of these instead.");
+          setBusy(false);
+          if (!res) { fallback(d, "We could not reach the server (check your connection), so use one of these instead."); return; }
+          var b = res.body || {};
+          if (res.ok && b.ok && b.ref && b.ref !== "ST-OK") { success(b.ref); return; }
+          if (res.status === 400 && b.errors) {
+            Object.keys(b.errors).forEach(function (k) { var inp = fieldOf(k); if (inp) setError(inp, b.errors[k]); });
+            showStatus("err", [el("p", "", "Please check the highlighted fields and try again.")]);
+            return;
           }
-        })
-        .catch(function () { fallback(d, "We could not reach the server (check your connection), so use one of these instead."); })
-        .then(function () { submitBtn.disabled = false; submitBtn.removeAttribute("aria-busy"); submitBtn.textContent = oldText; });
+          fallback(d, res.status === 503 ? "Online delivery is not switched on yet, so use one of these instead." : "The online form could not send just now, so use one of these instead.");
+        });
     });
-    $$("[required]", form).forEach(function (input) { input.addEventListener("input", function () { if (input.getAttribute("aria-invalid") === "true") setError(input, ""); }); });
+    $$("input, textarea", form).forEach(function (input) {
+      input.addEventListener("input", function () { if (input.getAttribute("aria-invalid") === "true") setError(input, ""); });
+    });
+
+    // result of a no-JavaScript submission (the server redirects back with ?sent= or ?error=)
+    var qs = new URLSearchParams(location.search);
+    if (qs.get("sent")) success(qs.get("sent"));
+    else if (qs.get("error")) fallback({ name: "", org: "", email: "", phone: "", interest: "", items: "", message: "" }, "Your enquiry could not be sent online.");
   }
 
-  /* ---------- 5. helpers ---------- */
-  $$("[data-year]").forEach(function (el) { el.textContent = String(new Date().getFullYear()); });
+  /* ---------- 7. helpers ---------- */
+  $$("[data-year]").forEach(function (y) { y.textContent = String(new Date().getFullYear()); });
   $$('a[target="_blank"]').forEach(function (a) { if (!/noopener/.test(a.rel)) a.rel = (a.rel ? a.rel + " " : "") + "noopener"; });
+
+  // the floating WhatsApp button steps aside while a call-to-action, the form buttons or the footer are on screen
+  var fab = $(".wa-fab");
+  if (fab && "IntersectionObserver" in window) {
+    var seen = [];
+    var io = new IntersectionObserver(function (entries) {
+      entries.forEach(function (en) {
+        var i = seen.indexOf(en.target);
+        if (en.isIntersecting && i === -1) seen.push(en.target);
+        if (!en.isIntersecting && i !== -1) seen.splice(i, 1);
+      });
+      fab.classList.toggle("is-hidden", seen.length > 0);
+    });
+    $$(".cta, .site-footer .container, .form__actions, .hero .btn-row, .office .btn-row, .basket, .form-status").forEach(function (t) { io.observe(t); });
+  }
 })();

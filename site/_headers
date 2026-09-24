@@ -1,20 +1,20 @@
 # Security + caching headers for Cloudflare Pages.
-# CSP allows: our own files, Bunny Fonts (CSS + font files), Google Maps embed, WhatsApp/tel links.
+# CSP allows: our own files, Bunny Fonts (CSS + font files) and the Google Maps embed.
 /*
-  Strict-Transport-Security: max-age=31536000; includeSubDomains; preload
+  Strict-Transport-Security: max-age=31536000
   X-Content-Type-Options: nosniff
   X-Frame-Options: SAMEORIGIN
   Referrer-Policy: strict-origin-when-cross-origin
   Permissions-Policy: camera=(), microphone=(), geolocation=(), payment=(), usb=()
   Cross-Origin-Opener-Policy: same-origin
-  Content-Security-Policy: default-src 'self'; script-src 'self'; style-src 'self' https://fonts.bunny.net; font-src 'self' https://fonts.bunny.net; img-src 'self' data:; frame-src https://www.google.com https://maps.google.com; connect-src 'self'; form-action 'self' mailto:; base-uri 'self'; frame-ancestors 'self'; object-src 'none'; upgrade-insecure-requests
+  Content-Security-Policy: default-src 'self'; script-src 'self'; style-src 'self' https://fonts.bunny.net; font-src 'self' https://fonts.bunny.net; img-src 'self'; frame-src https://www.google.com https://maps.google.com; connect-src 'self'; form-action 'self'; base-uri 'self'; frame-ancestors 'self'; object-src 'none'; upgrade-insecure-requests
   Cache-Control: public, max-age=0, must-revalidate
 
+# CSS/JS carry ?v= version stamps (bump them when you change the files), images are renamed when replaced.
 /assets/*
+  ! Cache-Control
   Cache-Control: public, max-age=604800, stale-while-revalidate=86400
 
 /downloads/*
+  ! Cache-Control
   Cache-Control: public, max-age=86400
-
-/api/*
-  Cache-Control: no-store

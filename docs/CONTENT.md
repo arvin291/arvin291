@@ -12,8 +12,20 @@ Keep the tags (`<p>`, `</p>`, `<h2>`…) intact. Use `&amp;` for an ampersand.
 
 These live in **one place**: `tools/partials/header.html` and `tools/partials/footer.html`.
 Edit, then run `python3 tools/sync-partials.py` — it copies the block into every page.
-The WhatsApp number also appears in the WhatsApp links on `contact.html`, `index.html`,
-`products.html` and `web.html` (search for `wa.me/`).
+The WhatsApp number also appears in the WhatsApp links on `index.html`, `products.html` and
+`web.html` (search for `wa.me/`).
+
+## How the pages fit together
+
+The home page (`site/index.html`) is the whole site in one scroll. Each section has an `id`
+(`home`, `products`, `solutions`, `web`, `alliances`, `company`, `contact`) and the attribute
+`data-spy`; the menu links point at `/#<id>`, the desktop menu underlines the section in view,
+and on phones the pill at the top right names it. To add a section: give it an `id` and
+`data-spy`, and add a matching link with `data-section="<id>"` in `tools/partials/header.html`.
+
+The home sections are short summaries. The detail lives on one page only: the full catalogue on
+`products.html`, practice details on `solutions.html`, and so on. Do not copy a block of text onto
+both; link to it instead. The enquiry form and FAQ exist only in the home page's Contact section.
 
 ## Add or change a product row
 

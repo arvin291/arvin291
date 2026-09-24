@@ -6,10 +6,12 @@ Cloudflare Function that emails the enquiry form to the office.
 
 ```
 site/            ← the website. This folder, and only this folder, is published.
-  index.html, about.html, products.html, solutions.html, web.html, alliances.html,
-  contact.html, privacy.html, 404.html
+  index.html      the one-scroll home: Home, Products, Solutions, Web services, Alliances,
+                  Company and Contact (with the enquiry form and FAQ) as anchored sections
+  products.html, solutions.html, web.html, alliances.html, about.html
+                  detail pages linked from each home section; privacy.html, 404.html
   assets/css/site.css      design system (colours, layout, components)
-  assets/js/site.js        menu, catalogue filters, enquiry list, contact form
+  assets/js/site.js        scroll-spy ribbon, mobile section capsule, catalogue filters, enquiry list, form
   assets/img/              optimised images (WebP + PNG fallbacks, favicons, OG image)
   data/catalogue.json      the product line card as data (used by the enquiry list; the future order page grows from here)
   downloads/               company profile PDF
@@ -43,9 +45,14 @@ npx serve site          # then open http://localhost:3000
 
 ## Publishing
 
-Push to GitHub. If the Cloudflare Pages project is connected to this repository it deploys
-automatically (build command: none, output directory: `site`). Otherwise run
-`npx wrangler pages deploy`. Full steps, including the email setup for the contact form, are
+From the project folder on your computer:
+
+```
+npx wrangler pages deploy --branch main --commit-dirty=true
+```
+
+Or connect the GitHub repository to Cloudflare Pages so every push to `main` deploys
+(build command: none, output directory: `site`). Full steps, including the email setup for the contact form, are
 in **docs/DEPLOY.md**.
 
 ## Two-way sync with your laptop

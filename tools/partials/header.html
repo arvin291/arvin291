@@ -1,6 +1,6 @@
 <!-- @@header -->
 <a class="skip-link" href="#main">Skip to content</a>
-<header class="site-header" id="top">
+<header class="site-header" id="top" data-header>
   <div class="topbar">
     <div class="container topbar__in">
       <p class="topbar__note"><svg class="ico" aria-hidden="true"><use href="#i-check"/></svg><span class="long">GeM-listed supplier · Lucknow, Uttar Pradesh</span><span class="short">GeM-listed · Lucknow</span></p>
@@ -11,24 +11,25 @@
     </div>
   </div>
   <div class="container nav">
-    <a class="brand" href="/">
+    <a class="brand" href="/#home">
       <img src="/assets/img/emblem-96.webp" srcset="/assets/img/emblem-96.webp 1x, /assets/img/emblem-160.webp 2x" width="48" height="48" alt="" decoding="async">
       <span class="brand__text"><span class="brand__name">Shalvi Technologies</span><span class="brand__tag">Expertise · Experience · Excellence</span></span>
     </a>
     <button class="nav__toggle" type="button" aria-expanded="false" aria-controls="site-nav" data-nav-toggle>
+      <span class="sr-only">Sections menu, now showing: </span><span class="nav__where" data-where>Home</span>
+      <span class="badge" data-basket-count aria-hidden="true" hidden>0</span>
       <svg class="ico ico--menu" aria-hidden="true"><use href="#i-menu"/></svg>
       <svg class="ico ico--close" aria-hidden="true"><use href="#i-close"/></svg>
-      <span>Menu</span>
     </button>
-    <nav class="nav__links" id="site-nav" aria-label="Primary">
+    <nav class="nav__links" id="site-nav" aria-label="Sections">
       <ul>
-        <li><a href="/" data-page="home">Home</a></li>
-        <li><a href="/products" data-page="products">Products</a></li>
-        <li><a href="/solutions" data-page="solutions">Solutions</a></li>
-        <li><a href="/web" data-page="web">Web services</a></li>
-        <li><a href="/alliances" data-page="alliances">Alliances</a></li>
-        <li><a href="/about" data-page="about">Company</a></li>
-        <li class="nav__cta"><a class="btn btn--primary btn--sm" href="/contact" data-page="contact">Get a quote<span class="badge" data-basket-count hidden>0</span></a></li>
+        <li><a href="/#home" data-page="home" data-section="home">Home</a></li>
+        <li><a href="/#products" data-page="products" data-section="products">Products</a></li>
+        <li><a href="/#solutions" data-page="solutions" data-section="solutions">Solutions</a></li>
+        <li><a href="/#web" data-page="web" data-section="web">Web services</a></li>
+        <li><a href="/#alliances" data-page="alliances" data-section="alliances">Alliances</a></li>
+        <li><a href="/#company" data-page="about" data-section="company">Company</a></li>
+        <li class="nav__cta"><a class="btn btn--primary btn--sm" href="/#contact" data-page="contact" data-section="contact" data-label="Contact">Get a quote<span class="badge" data-basket-count aria-hidden="true" hidden>0</span><span class="sr-only" data-basket-sr></span></a></li>
       </ul>
     </nav>
   </div>

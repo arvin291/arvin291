@@ -1,7 +1,12 @@
-# Cloudflare Pages configuration.
-# Publish directory is `site/` — nothing outside it is ever uploaded.
-# Deploy with:  npx wrangler pages deploy
-# (or connect the GitHub repo to Pages: build command empty, output directory "site")
+# Cloudflare Pages configuration. Only the site/ folder (plus functions/) is uploaded.
+# Deploy:  npx wrangler pages deploy --branch main --commit-dirty=true
 name = "shalvi-technologies"
 compatibility_date = "2026-09-01"
 pages_build_output_dir = "site"
+
+# Where the enquiry form is delivered. Plain values live here; the Resend API key is a secret:
+#   npx wrangler pages secret put RESEND_API_KEY
+# ENQUIRY_FROM must use a domain verified in Resend (see docs/DEPLOY.md, section 2).
+[vars]
+ENQUIRY_TO = "shalvitechnologieslko@gmail.com,info@shalvitechnologies.com"
+ENQUIRY_FROM = "Shalvi Website <enquiry@shalvitechnologies.com>"

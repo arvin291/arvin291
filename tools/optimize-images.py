@@ -33,7 +33,7 @@ def on_bg(size, pad, color=(20, 8, 12, 255)):
     e = sq.resize((inner, inner), Image.Resampling.LANCZOS); im.paste(e, ((size - inner) // 2, (size - inner) // 2), e); return im
 
 save(sq.resize((32, 32), Image.Resampling.LANCZOS), "favicon-32.png")
-Image.open(OUT / "favicon-32.png").save(OUT / "favicon.ico", sizes=[(16, 16), (32, 32), (48, 48)])
+sq.resize((48, 48), Image.Resampling.LANCZOS).save(OUT / "favicon.ico", sizes=[(16, 16), (32, 32), (48, 48)])
 (ROOT / "site" / "favicon.ico").write_bytes((OUT / "favicon.ico").read_bytes())
 save(on_bg(180, 0.10), "apple-touch-icon.png"); save(on_bg(192, 0.10), "icon-192.png")
 save(on_bg(512, 0.10), "icon-512.png"); save(on_bg(512, 0.20), "icon-512-maskable.png")
