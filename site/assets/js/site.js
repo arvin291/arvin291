@@ -331,18 +331,4 @@
   $$("[data-year]").forEach(function (y) { y.textContent = String(new Date().getFullYear()); });
   $$('a[target="_blank"]').forEach(function (a) { if (!/noopener/.test(a.rel)) a.rel = (a.rel ? a.rel + " " : "") + "noopener"; });
 
-  // the floating WhatsApp + social row steps aside while a call-to-action, the form buttons or the footer are on screen
-  var fab = $("[data-float]");
-  if (fab && "IntersectionObserver" in window) {
-    var seen = [];
-    var io = new IntersectionObserver(function (entries) {
-      entries.forEach(function (en) {
-        var i = seen.indexOf(en.target);
-        if (en.isIntersecting && i === -1) seen.push(en.target);
-        if (!en.isIntersecting && i !== -1) seen.splice(i, 1);
-      });
-      fab.classList.toggle("is-hidden", seen.length > 0);
-    });
-    $$(".cta, .site-footer .container, .form__actions, .office .btn-row, .basket, .form-status").forEach(function (t) { io.observe(t); });
-  }
 })();

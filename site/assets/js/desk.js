@@ -213,19 +213,5 @@
     ask(q);
   });
 
-  // step aside with the WhatsApp button while a call-to-action or the footer is on screen
-  if ("IntersectionObserver" in window) {
-    var seen = [];
-    var io = new IntersectionObserver(function (entries) {
-      entries.forEach(function (en) {
-        var i = seen.indexOf(en.target);
-        if (en.isIntersecting && i === -1) seen.push(en.target);
-        if (!en.isIntersecting && i !== -1) seen.splice(i, 1);
-      });
-      root.classList.toggle("is-tucked", seen.length > 0);
-    });
-    Array.prototype.forEach.call(document.querySelectorAll(".cta, .site-footer .container, .form__actions, .office .btn-row, .form-status"), function (t) { io.observe(t); });
-  }
-
   window.ShalviDesk = { answer: answer }; // exposed for testing
 })();
