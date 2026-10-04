@@ -42,6 +42,14 @@ Copy `site/web.html` to `site/newpage.html`. Change the `<title>`, description, 
 menu (`tools/partials/header.html`) or footer, run the sync tool, and add the URL to
 `site/sitemap.xml`. Cloudflare serves it at `/newpage` (no `.html` in the address).
 
+## Changing the stylesheet or scripts
+
+**Stylesheet and scripts carry a date in their file name** (`site/assets/css/site.20261004.css`,
+  `site/assets/js/site.20261004.js`, `desk.20261004.js`). When you change one, rename it with the
+  new date and update the references (`tools/partials/footer.html` for the scripts, the `<link>` in
+  every `site/*.html` for the stylesheet). A new name guarantees visitors get the new file; the old
+  `?v=` stamps were ignored by the Cloudflare cache and the live hero showed unstyled (2026-10-04).
+
 ## Images
 
 Put the master file in `brand/` and run `python3 tools/optimize-images.py` (needs

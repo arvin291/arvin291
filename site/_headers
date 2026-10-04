@@ -10,10 +10,10 @@
   Content-Security-Policy: default-src 'self'; script-src 'self'; style-src 'self' https://fonts.bunny.net; font-src 'self' https://fonts.bunny.net; img-src 'self'; frame-src https://www.google.com https://maps.google.com; connect-src 'self'; form-action 'self'; base-uri 'self'; frame-ancestors 'self'; object-src 'none'; upgrade-insecure-requests
   Cache-Control: public, max-age=0, must-revalidate
 
-# CSS/JS carry ?v= version stamps (bump them when you change the files), images are renamed when replaced.
+# CSS/JS file names carry a date (site.YYYYMMDD.css): rename the file when you change it.
 /assets/*
   ! Cache-Control
-  Cache-Control: public, max-age=604800, stale-while-revalidate=86400
+  Cache-Control: public, max-age=86400
 
 /downloads/*
   ! Cache-Control

@@ -40,13 +40,22 @@ npx wrangler pages deploy --branch main --commit-dirty=true
   `id="home"`, class `hero--home`) with status badge, gradient headline, typewriter line
   (`data-rotate`, code in `site.js` "hero: typewriter line"), interactive SVG system map
   (emblem hub + 6 clickable practice nodes, animated data lines), brand marquee and glass stat
-  cards. Styles: the "Home hero — tech look" block at the end of `site/assets/css/site.css`.
+  cards. Styles: the "Home hero — tech look" block at the end of `site/assets/css/site.20261004.css`.
   Motion stops under reduced-motion. Tested at 1440/1024/390/320 px, html-validate and axe clean.
   Deployed by the owner on 2026-10-04.
 - **Restored after owner feedback** (2026-10-04): "GeM" highlighted as a gold badge in the top
   strip (header partial, `.gem-badge`), header logo back to 72px (54px on phones), hero emblem
   enlarged to the centre of the system map (204px). Owner was unhappy these were reduced:
   do not shrink the logo or remove the GeM highlight again.
+
+## Rules learned the hard way
+
+- **Stylesheet and scripts carry a date in their file name** (`site/assets/css/site.20261004.css`,
+  `site/assets/js/site.20261004.js`, `desk.20261004.js`). When you change one, rename it with the
+  new date and update the references (`tools/partials/footer.html` for the scripts, the `<link>` in
+  every `site/*.html` for the stylesheet). A new name guarantees visitors get the new file; the old
+  `?v=` stamps were ignored by the Cloudflare cache and the live hero showed unstyled (2026-10-04).
+- Do not shrink the logo or remove the GeM highlight (owner feedback).
 
 ## Testing recipe used so far
 
