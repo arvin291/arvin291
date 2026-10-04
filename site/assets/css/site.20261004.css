@@ -770,3 +770,26 @@ html { scroll-padding-bottom: 5.5rem; }
   .brand img { width: 44px; height: 44px; }
 }
 @media (max-width: 45em) { .topbar, .topbar__note { font-size: .72rem; } .topbar__note { white-space: nowrap; } }
+
+/* GeM Listed Supplier: eye-catching pill in the top strip */
+.topbar__note { gap: .7rem; }
+.gem-badge {
+  display: inline-flex; align-items: center; gap: .35rem; padding: .22rem .75rem .22rem .55rem; border-radius: 999px;
+  background: linear-gradient(100deg, #e9b65a 0%, #f8e2a0 22%, #e9b65a 44%, #d99a3e 100%); background-size: 220% 100%;
+  color: #1a0a0e; font-family: var(--font-sans); font-size: .8rem; font-weight: 800; letter-spacing: .07em; text-transform: uppercase;
+  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, .35), 0 0 0 1px rgba(230, 196, 106, .6), 0 0 16px rgba(230, 196, 106, .6);
+  animation: gemShine 3.2s linear infinite, gemGlow 2.4s ease-in-out infinite;
+}
+.gem-badge .ico { width: 1em; height: 1em; stroke-width: 3; }
+@keyframes gemShine { from { background-position: 120% 0; } to { background-position: -100% 0; } }
+@keyframes gemGlow { 0%, 100% { box-shadow: inset 0 0 0 1px rgba(255, 255, 255, .35), 0 0 0 1px rgba(230, 196, 106, .6), 0 0 10px rgba(230, 196, 106, .45); } 50% { box-shadow: inset 0 0 0 1px rgba(255, 255, 255, .35), 0 0 0 1px rgba(230, 196, 106, .9), 0 0 22px rgba(230, 196, 106, .85); } }
+@media (max-width: 45em) { .topbar__note .long { display: none; } .gem-badge { font-size: .72rem; } }
+@media (max-width: 22.5em) { .gem-badge { font-size: .66rem; padding: .2rem .55rem .2rem .45rem; } }
+@media (prefers-reduced-motion: reduce) { .gem-badge { animation: none !important; } }
+.gem-badge { text-transform: none; letter-spacing: .02em; font-size: .86rem; }
+@media (max-width: 45em) { .gem-badge { font-size: .78rem; } }
+@media (max-width: 22.5em) {
+  .gem-badge { font-size: .74rem; }
+  .topbar__links a span { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+  .topbar__links a { min-width: 44px; justify-content: center; }
+}

@@ -55,7 +55,9 @@ npx wrangler pages deploy --branch main --commit-dirty=true
   new date and update the references (`tools/partials/footer.html` for the scripts, the `<link>` in
   every `site/*.html` for the stylesheet). A new name guarantees visitors get the new file; the old
   `?v=` stamps were ignored by the Cloudflare cache and the live hero showed unstyled (2026-10-04).
-- Do not shrink the logo or remove the GeM highlight (owner feedback).
+- Do not shrink the logo or remove the GeM highlight (owner feedback). The top strip shows
+  "GeM Listed Supplier" as a glowing gold pill with a tick (`.gem-badge`, header partial); keep
+  the official "GeM" capitalisation.
 
 ## Testing recipe used so far
 
