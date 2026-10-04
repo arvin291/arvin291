@@ -37,7 +37,31 @@ def personalise(header, slug):
     header = header.replace(tag, tag.replace("data-page=", 'aria-current="page" data-page=', 1), 1)
     return header.replace("data-where>Home<", "data-where>%s<" % label)
 
+def stamp_assets():
+    """Rename site/assets css/js files to <name>.<content-hash>.<ext> and update references,
+    so browsers and Cloudflare always fetch a changed file. Runs every time this tool runs."""
+    import hashlib
+    refs = list(SITE.glob("*.html")) + [PARTIALS / "footer.html", PARTIALS / "header.html"]
+    for folder, base, ext in (("css", "site", "css"), ("js", "site", "js"), ("js", "desk", "js")):
+        files = sorted((SITE / "assets" / folder).glob(f"{base}.*.{ext}"))
+        if len(files) != 1:
+            print(f"  ! expected one {base}.*.{ext} in assets/{folder}, found {len(files)}", file=sys.stderr)
+            continue
+        f = files[0]
+        digest = hashlib.sha1(f.read_bytes()).hexdigest()[:8]
+        new = f.with_name(f"{base}.{digest}.{ext}")
+        if new.name == f.name:
+            continue
+        f.rename(new)
+        old_url, new_url = f"/assets/{folder}/{f.name}", f"/assets/{folder}/{new.name}"
+        for r in refs:
+            txt = read(r)
+            if old_url in txt:
+                write(r, txt.replace(old_url, new_url))
+        print(f"  renamed {f.name} -> {new.name}")
+
 def main():
+    stamp_assets()
     parts = {name: read(PARTIALS / f"{name}.html").strip() for name in BLOCKS}
     changed, missing = 0, 0
     for page in sorted(SITE.glob("*.html")):

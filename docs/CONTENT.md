@@ -44,11 +44,11 @@ menu (`tools/partials/header.html`) or footer, run the sync tool, and add the UR
 
 ## Changing the stylesheet or scripts
 
-**Stylesheet and scripts carry a date in their file name** (`site/assets/css/site.20261004.css`,
-  `site/assets/js/site.20261004.js`, `desk.20261004.js`). When you change one, rename it with the
-  new date and update the references (`tools/partials/footer.html` for the scripts, the `<link>` in
-  every `site/*.html` for the stylesheet). A new name guarantees visitors get the new file; the old
-  `?v=` stamps were ignored by the Cloudflare cache and the live hero showed unstyled (2026-10-04).
+**Stylesheet and script file names are stamped automatically** with a hash of their contents
+  (e.g. `site/assets/css/site.3f88f4e5.css`). After changing CSS or JS, always run
+  `python3 tools/sync-partials.py`: it renames the changed file and updates every reference.
+  Never edit-and-deploy without it: a changed file under an old name is served stale from
+  caches (happened twice on 2026-10-04: unstyled hero, then the GeM pill with old styles).
 
 ## Images
 

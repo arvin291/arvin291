@@ -10,8 +10,8 @@ site/            ← the website. This folder, and only this folder, is publishe
                   Company and Contact (with the enquiry form and FAQ) as anchored sections
   products.html, solutions.html, web.html, alliances.html, about.html
                   detail pages linked from each home section; privacy.html, 404.html
-  assets/css/site.YYYYMMDD.css  design system (rename with a new date when changed) (colours, layout, components)
-  assets/js/site.YYYYMMDD.js    scroll-spy ribbon, mobile section capsule, catalogue filters, enquiry list, form
+  assets/css/site.<hash>.css   design system (name stamped by tools/sync-partials.py) (colours, layout, components)
+  assets/js/site.<hash>.js      scroll-spy ribbon, mobile section capsule, catalogue filters, enquiry list, form
   assets/img/              optimised images (WebP + PNG fallbacks, favicons, OG image)
   data/catalogue.json      the product line card as data (used by the enquiry list; the future order page grows from here)
   downloads/               company profile PDF
