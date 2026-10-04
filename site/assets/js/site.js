@@ -327,6 +327,29 @@
     else if (qs.get("error")) fallback({ name: "", org: "", email: "", phone: "", interest: "", items: "", message: "" }, "Your enquiry could not be sent online.");
   }
 
+  /* ---------- hero: typewriter line ---------- */
+  var rot = $("[data-rotate]");
+  if (rot && !window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+    var words = [];
+    try { words = JSON.parse(rot.getAttribute("data-rotate")); } catch (e) { words = []; }
+    if (words.length > 1) {
+      var wi = 0, ci = words[0].length, deleting = true;
+      var tick = function () {
+        var w = words[wi];
+        if (deleting) {
+          ci--; rot.textContent = w.slice(0, ci);
+          if (ci <= 0) { deleting = false; wi = (wi + 1) % words.length; }
+          window.setTimeout(tick, 32);
+        } else {
+          var n = words[wi]; ci++; rot.textContent = n.slice(0, ci);
+          if (ci >= n.length) { deleting = true; window.setTimeout(tick, 1900); return; }
+          window.setTimeout(tick, 60);
+        }
+      };
+      window.setTimeout(tick, 2200);
+    }
+  }
+
   /* ---------- 7. helpers ---------- */
   $$("[data-year]").forEach(function (y) { y.textContent = String(new Date().getFullYear()); });
   $$('a[target="_blank"]').forEach(function (a) { if (!/noopener/.test(a.rel)) a.rel = (a.rel ? a.rel + " " : "") + "noopener"; });

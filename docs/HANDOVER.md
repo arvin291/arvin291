@@ -1,6 +1,6 @@
 # Handover — Shalvi Technologies website
 
-Last updated: 2026-10-04 (cloud session "Website review", branch `claude/website-review-vlk42j`)
+Last updated: 2026-10-04, after the hero redesign (cloud session "Website review", branch `claude/website-review-vlk42j`)
 
 ## Where the code lives
 
@@ -34,15 +34,15 @@ npx wrangler pages deploy --branch main --commit-dirty=true
   Until then the form offers email app / WhatsApp / call. Steps: `docs/DEPLOY.md` section 2.
 - Shared header/footer/icons: edit `tools/partials/*.html`, then `python3 tools/sync-partials.py`.
 
-## In progress when this file was written
+## Latest change
 
-- **Hero redesign** (owner asked for a more attractive, tech-centric front page). New markup is
-  in `site/index.html` (section `id="home"`, class `hero--home`): badge, gradient headline,
-  terminal-style rotating line (`data-rotate`), interactive SVG "system map" (emblem hub +
-  6 clickable practice nodes with animated data lines), brand marquee, glass stat cards.
-  Still needed: the `.hero--home` CSS block in `site/assets/css/site.css`, the typewriter code
-  for `[data-rotate]` in `site.js`, then a browser check at 1440 / 1024 / 390 / 320 px,
-  html-validate and axe, commit, push. If this note is still here, that work did not finish.
+- **Hero redesign done** (2026-10-04): tech-style home hero in `site/index.html` (section
+  `id="home"`, class `hero--home`) with status badge, gradient headline, typewriter line
+  (`data-rotate`, code in `site.js` "hero: typewriter line"), interactive SVG system map
+  (emblem hub + 6 clickable practice nodes, animated data lines), brand marquee and glass stat
+  cards. Styles: the "Home hero — tech look" block at the end of `site/assets/css/site.css`.
+  Motion stops under reduced-motion. Tested at 1440/1024/390/320 px, html-validate and axe clean.
+  Pushed to the branch; the owner still needs to merge into `main` and deploy.
 
 ## Testing recipe used so far
 
