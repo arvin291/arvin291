@@ -48,6 +48,11 @@ npx wrangler pages deploy --branch main --commit-dirty=true
   enlarged to the centre of the system map (204px). Owner was unhappy these were reduced:
   do not shrink the logo or remove the GeM highlight again.
 
+- **Email addresses changed** (2026-10-04, owner request): site-wide `info@shalvitechnologies.in`,
+  plus `gyanesh@shalvitechnologies.in` in the footer, contact card, privacy note, Ask Shalvi and
+  JSON-LD. Form delivery (`wrangler.toml` ENQUIRY_TO) goes to both; sender `enquiry@shalvitechnologies.in`
+  (verify the .in domain in Resend before switching email delivery on). Website domain stays .com.
+
 ## Rules learned the hard way
 
 - **Stylesheet and script file names are stamped automatically** with a hash of their contents
@@ -68,7 +73,6 @@ npx wrangler pages deploy --branch main --commit-dirty=true
 
 ## Questions only the owner can answer (still open)
 
-- Does `info@shalvitechnologies.com` exist and who reads it? (Profile lists only the Gmail.)
 - Are cyber security software, forensic systems, drones and web services really offered?
 - GSTIN, GeM seller ID, Udyam number for the Company facts card (`site/about.html`).
 - Is the raw profile deck OK as the public PDF (skills chart, Gmail, "Ahahamau" typo)?

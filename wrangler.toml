@@ -8,5 +8,5 @@ pages_build_output_dir = "site"
 #   npx wrangler pages secret put RESEND_API_KEY
 # ENQUIRY_FROM must use a domain verified in Resend (see docs/DEPLOY.md, section 2).
 [vars]
-ENQUIRY_TO = "shalvitechnologieslko@gmail.com,info@shalvitechnologies.com"
-ENQUIRY_FROM = "Shalvi Website <enquiry@shalvitechnologies.com>"
+ENQUIRY_TO = "info@shalvitechnologies.in,gyanesh@shalvitechnologies.in"
+ENQUIRY_FROM = "Shalvi Website <enquiry@shalvitechnologies.in>"

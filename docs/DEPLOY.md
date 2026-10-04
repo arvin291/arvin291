@@ -30,10 +30,10 @@ npx wrangler pages deploy        # reads wrangler.toml → uploads the site/ fol
 Without this step the form still works: it offers to open the visitor's email app or WhatsApp
 with the message filled in. With it, enquiries arrive in your inbox with a reference number.
 
-1. Create a free account at **resend.com**, add the domain `shalvitechnologies.com`
-   (Resend shows DNS records to add in Cloudflare → DNS) and create an **API key**.
+1. Create a free account at **resend.com**, add the domain `shalvitechnologies.in`
+   (Resend shows DNS records to add wherever that domain's DNS is managed) and create an **API key**.
 2. The recipients and sender are already set in `wrangler.toml` under `[vars]`:
-   `ENQUIRY_TO` (both mailboxes) and `ENQUIRY_FROM` (`enquiry@shalvitechnologies.com`, which works
+   `ENQUIRY_TO` (both mailboxes) and `ENQUIRY_FROM` (`enquiry@shalvitechnologies.in`, which works
    once the domain is verified in Resend). Change them there if needed.
 3. Store the API key as a secret (it is never written into any file):
 

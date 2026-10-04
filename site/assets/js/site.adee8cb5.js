@@ -195,7 +195,7 @@
     var status = $("[data-form-status]");
     var submitBtn = $("button[type=submit]", form);
     var endpoint = form.getAttribute("action") || "/api/enquiry";
-    var TO = form.getAttribute("data-to") || "info@shalvitechnologies.com";
+    var TO = form.getAttribute("data-to") || "info@shalvitechnologies.in";
     var WA = form.getAttribute("data-wa") || "916307057085";
     var configured = null;
     var fieldOf = function (name) { return form.querySelector("[name=" + name + "]"); };
