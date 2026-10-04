@@ -42,7 +42,11 @@ npx wrangler pages deploy --branch main --commit-dirty=true
   (emblem hub + 6 clickable practice nodes, animated data lines), brand marquee and glass stat
   cards. Styles: the "Home hero — tech look" block at the end of `site/assets/css/site.css`.
   Motion stops under reduced-motion. Tested at 1440/1024/390/320 px, html-validate and axe clean.
-  Pushed to the branch; the owner still needs to merge into `main` and deploy.
+  Deployed by the owner on 2026-10-04.
+- **Restored after owner feedback** (2026-10-04): "GeM" highlighted as a gold badge in the top
+  strip (header partial, `.gem-badge`), header logo back to 72px (54px on phones), hero emblem
+  enlarged to the centre of the system map (204px). Owner was unhappy these were reduced:
+  do not shrink the logo or remove the GeM highlight again.
 
 ## Testing recipe used so far
 

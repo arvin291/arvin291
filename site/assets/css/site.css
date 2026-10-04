@@ -750,3 +750,23 @@ html { scroll-padding-bottom: 5.5rem; }
   .hero__caret { animation: none !important; }
 }
 @media print { .hero__visual, .hero__brands, .hero__term { display: none !important; } }
+
+/* restored: GeM highlight and full-size logo (2026.15) */
+.topbar__note { font-size: .8rem; color: var(--on-dark); }
+.gem-badge { display: inline-block; padding: .12rem .5rem; border-radius: 4px; background: var(--gold-bright); color: var(--ink-950); font-weight: 700; letter-spacing: .08em; box-shadow: 0 0 12px rgba(230, 196, 106, .45); }
+.nav { min-height: 92px; }
+.brand { gap: .9rem; }
+.brand img { width: 72px; height: 72px; }
+.brand__name { font-size: 1.2rem; }
+.hv-hub { stroke-width: 2; filter: drop-shadow(0 0 18px rgba(230, 167, 74, .45)); }
+@media (max-width: 45em) {
+  .nav { min-height: 72px; }
+  .brand img { width: 54px; height: 54px; }
+  .brand__name { font-size: 1.05rem; }
+  .topbar__note .short { display: inline; }
+}
+@media (max-width: 22.5em) {
+  .topbar__note { display: inline-flex; font-size: .72rem; }
+  .brand img { width: 44px; height: 44px; }
+}
+@media (max-width: 45em) { .topbar, .topbar__note { font-size: .72rem; } .topbar__note { white-space: nowrap; } }
